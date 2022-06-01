@@ -17,83 +17,81 @@ class LoginScreen extends StatelessWidget {
   final TextEditingController passwordController = TextEditingController();
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(),
-      body: ChangeNotifierProvider(
-        create: (context) => LoginManger(),
-        builder: (context, child) => Consumer<LoginManger>(
-          builder: (context, model, child) {
-            return Stack(
-              children: [
-                SingleChildScrollView(
-                  reverse: true,
-                  physics: const BouncingScrollPhysics(),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      const SizedBox(width: double.infinity),
-                      SizedBox(
+    return ChangeNotifierProvider(
+      create: (context) => LoginManger(),
+      builder: (context, child) => Consumer<LoginManger>(
+        builder: (context, model, child) => Stack(
+          children: [
+            Scaffold(
+              appBar: AppBar(),
+              body: SingleChildScrollView(
+                reverse: true,
+                physics: const BouncingScrollPhysics(),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    const SizedBox(width: double.infinity),
+                    SizedBox(
+                      height: 300.h,
+                      child: Lottie.asset(
+                        'assets/lottiefiles/hello.json',
+                        repeat: false,
                         height: 300.h,
-                        child: Lottie.asset(
-                          'assets/lottiefiles/hello.json',
-                          repeat: false,
-                          height: 300.h,
-                        ),
                       ),
-                      InputField(
-                        controller: emailController,
-                        hint: 'Email',
-                        icon: Icons.email,
-                        inputType: TextInputType.emailAddress,
+                    ),
+                    InputField(
+                      controller: emailController,
+                      hint: 'Email',
+                      icon: Icons.email,
+                      inputType: TextInputType.emailAddress,
+                    ),
+                    InputField(
+                      controller: passwordController,
+                      hint: 'Password',
+                      isPass: true,
+                      icon: Icons.lock,
+                    ),
+                    RoundButton(
+                      title: 'Login',
+                      onClick: () => model.login(
+                        context,
+                        email: emailController.text,
+                        password: passwordController.text,
                       ),
-                      InputField(
-                        controller: passwordController,
-                        hint: 'Password',
-                        isPass: true,
-                        icon: Icons.lock,
-                      ),
-                      RoundButton(
-                        title: 'Login',
-                        onClick: () => model.login(
-                          context,
-                          email: emailController.text,
-                          password: passwordController.text,
-                        ),
-                      ),
-                      Padding(
-                        padding: defaultPadding,
-                        child: Align(
-                          alignment: AlignmentDirectional.centerStart,
-                          child: Wrap(
-                            children: [
-                              Text(
-                                'don\'t have an account ? ',
-                                style: defaultTextStyle,
-                              ),
-                              InkWell(
-                                splashColor: Colors.transparent,
-                                highlightColor: Colors.transparent,
-                                onTap: () {
-                                  //todo : navigate to register screen
-                                },
-                                child: Text(
-                                  'sign up',
-                                  style: defaultTextStyle.copyWith(
-                                    color: MyColor.blue,
-                                  ),
+                    ),
+                    Padding(
+                      padding: defaultPadding,
+                      child: Align(
+                        alignment: AlignmentDirectional.centerStart,
+                        child: Wrap(
+                          children: [
+                            Text(
+                              'don\'t have an account ? ',
+                              style: defaultTextStyle,
+                            ),
+                            InkWell(
+                              splashColor: Colors.transparent,
+                              highlightColor: Colors.transparent,
+                              onTap: () {
+                                //todo : navigate to register screen
+                              },
+                              child: Text(
+                                'sign up',
+                                style: defaultTextStyle.copyWith(
+                                  color: MyColor.blue,
                                 ),
-                              )
-                            ],
-                          ),
+                              ),
+                            )
+                          ],
                         ),
-                      )
-                    ],
-                  ),
+                      ),
+                    )
+                  ],
                 ),
-                if (model.isLoading) loadingWidget(),
-              ],
-            );
-          },
+              ),
+            ),
+            if (model.isLoading) loadingWidget(),
+          ],
         ),
       ),
     );
