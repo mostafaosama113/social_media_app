@@ -56,8 +56,15 @@ class HomeScreen extends StatelessWidget {
                           Align(
                             alignment: Alignment.center,
                             child: CircleAvatar(
-                              backgroundImage: NetworkImage(userModel.image),
-                              radius: 50.r,
+                              radius: 52.r,
+                              child: Align(
+                                alignment: Alignment.center,
+                                child: CircleAvatar(
+                                  backgroundImage:
+                                      NetworkImage(userModel.image),
+                                  radius: 50.r,
+                                ),
+                              ),
                             ),
                           ),
                           SizedBox(height: 16.h),
@@ -78,7 +85,7 @@ class HomeScreen extends StatelessWidget {
                           ),
                           btnBar(
                             title: 'Sign out',
-                            icon: FontAwesomeIcons.arrowRight,
+                            icon: FontAwesomeIcons.arrowRightFromBracket,
                             onClick: () => model.signOut(context),
                           ),
                         ],
@@ -101,19 +108,22 @@ Widget btnBar({
   required IconData icon,
   required Function onClick,
 }) {
-  return Row(
-    children: [
-      Icon(
-        icon,
-        color: MyColor.blue,
-      ),
-      TextButton(
-        onPressed: () => onClick(),
-        child: Text(
-          title,
-          style: defaultTextStyle,
+  return Padding(
+    padding: EdgeInsets.symmetric(vertical: 5.h),
+    child: Row(
+      children: [
+        Icon(
+          icon,
+          color: MyColor.blue,
         ),
-      ),
-    ],
+        TextButton(
+          onPressed: () => onClick(),
+          child: Text(
+            title,
+            style: defaultTextStyle,
+          ),
+        ),
+      ],
+    ),
   );
 }
