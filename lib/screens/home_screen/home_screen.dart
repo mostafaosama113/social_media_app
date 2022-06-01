@@ -56,6 +56,7 @@ class HomeScreen extends StatelessWidget {
                           Align(
                             alignment: Alignment.center,
                             child: CircleAvatar(
+                              backgroundColor: MyColor.blue,
                               radius: 52.r,
                               child: Align(
                                 alignment: Alignment.center,
