@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:social_media_app/models/user_model.dart';
+import 'package:social_media_app/screens/home_screen/home_drawer.dart';
 import 'package:social_media_app/screens/home_screen/home_manger.dart';
 import 'package:social_media_app/shared/colors.dart';
 import 'package:social_media_app/shared/manger/padding_manger.dart';
@@ -43,57 +44,8 @@ class HomeScreen extends StatelessWidget {
                   },
                   itemCount: 1 + model.posts.length,
                 ),
-                drawer: Drawer(
-                  width: MediaQuery.of(context).size.width * .55,
-                  backgroundColor: Colors.white,
-                  child: SafeArea(
-                    child: Padding(
-                      padding:
-                          EdgeInsets.symmetric(vertical: 15.h, horizontal: 8.h),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Align(
-                            alignment: Alignment.center,
-                            child: CircleAvatar(
-                              backgroundColor: MyColor.blue,
-                              radius: 52.r,
-                              child: Align(
-                                alignment: Alignment.center,
-                                child: CircleAvatar(
-                                  backgroundImage:
-                                      NetworkImage(userModel.image),
-                                  radius: 50.r,
-                                ),
-                              ),
-                            ),
-                          ),
-                          SizedBox(height: 16.h),
-                          btnBar(
-                            title: 'View profile',
-                            icon: FontAwesomeIcons.user,
-                            onClick: () {},
-                          ),
-                          btnBar(
-                            title: 'messanger',
-                            icon: FontAwesomeIcons.facebookMessenger,
-                            onClick: () {},
-                          ),
-                          btnBar(
-                            title: 'Setting',
-                            icon: FontAwesomeIcons.gear,
-                            onClick: () {},
-                          ),
-                          btnBar(
-                            title: 'Sign out',
-                            icon: FontAwesomeIcons.arrowRightFromBracket,
-                            onClick: () => model.signOut(context),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
+                drawer: homeDrawer(
+                    context: context, userModel: userModel, model: model),
               ),
               if (model.isLoading) loadingWidget(),
             ],
@@ -102,29 +54,4 @@ class HomeScreen extends StatelessWidget {
       ),
     );
   }
-}
-
-Widget btnBar({
-  required String title,
-  required IconData icon,
-  required Function onClick,
-}) {
-  return Padding(
-    padding: EdgeInsets.symmetric(vertical: 5.h),
-    child: Row(
-      children: [
-        Icon(
-          icon,
-          color: MyColor.blue,
-        ),
-        TextButton(
-          onPressed: () => onClick(),
-          child: Text(
-            title,
-            style: defaultTextStyle,
-          ),
-        ),
-      ],
-    ),
-  );
 }
