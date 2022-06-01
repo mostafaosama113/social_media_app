@@ -134,8 +134,8 @@ class _PostWidgetState extends State<PostWidget> {
                 child: Row(
                   children: [
                     btn(
-                      icon: Icons.thumb_up,
-                      // icon: Icons.thumb_up_outlined,
+                      icon: FontAwesomeIcons.solidHeart,
+                      // icon: FontAwesomeIcons.heart,
                       title: 'Like',
                       color: MyColor.blue,
                       onClick: () {
@@ -143,7 +143,7 @@ class _PostWidgetState extends State<PostWidget> {
                       },
                     ),
                     btn(
-                      icon: Icons.comment,
+                      icon: FontAwesomeIcons.comment,
                       title: 'Comments',
                       color: Colors.black,
                       onClick: () {
