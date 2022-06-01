@@ -81,7 +81,7 @@ class HomeScreen extends StatelessWidget {
                           ),
                           btnBar(
                             title: 'Setting',
-                            icon: FontAwesomeIcons.barsProgress,
+                            icon: FontAwesomeIcons.gear,
                             onClick: () {},
                           ),
                           btnBar(
