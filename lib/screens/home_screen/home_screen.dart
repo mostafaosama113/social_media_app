@@ -39,7 +39,10 @@ class HomeScreen extends StatelessWidget {
                     if (index == 0) {
                       return newPostWidget(model: userModel, context: context);
                     } else {
-                      return PostWidget(model.posts[index - 1]);
+                      return PostWidget(
+                        homeManger: model,
+                        postModel: model.posts[index - 1],
+                      );
                     }
                   },
                   itemCount: 1 + model.posts.length,

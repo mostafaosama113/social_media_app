@@ -9,6 +9,7 @@ import 'package:social_media_app/shared/navigator.dart';
 class HomeManger extends ChangeNotifier {
   bool isLoading = false;
   List<PostModel> posts = [];
+  Map<String, List<PostModel>> postById = {};
   void getPosts() {
     isLoading = true;
     notifyListeners();
@@ -28,6 +29,8 @@ class HomeManger extends ChangeNotifier {
         model.userModel =
             UserModel.fromJson(snapshot.data() as Map<String, dynamic>);
         posts.add(model);
+        if (postById[model.userId] == null) postById[model.userId] = [];
+        postById[model.userId]!.add(model);
       }
       isLoading = false;
       notifyListeners();

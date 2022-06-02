@@ -1,14 +1,18 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:social_media_app/models/user_model.dart';
+import 'package:social_media_app/screens/home_screen/home_manger.dart';
+import 'package:social_media_app/screens/profile_screen/profile_screen.dart';
+import 'package:social_media_app/shared/navigator.dart';
 import '../../shared/colors.dart';
 import '../../shared/manger/text_style_manger.dart';
 
 Widget homeDrawer(
     {required BuildContext context,
     required UserModel userModel,
-    required model}) {
+    required HomeManger model}) {
   return Drawer(
     width: MediaQuery.of(context).size.width * .55,
     backgroundColor: Colors.white,
@@ -36,7 +40,18 @@ Widget homeDrawer(
             btnBar(
               title: 'View profile',
               icon: FontAwesomeIcons.user,
-              onClick: () {},
+              onClick: () => Navigator.push(
+                context,
+                SlideRight(
+                  screen: ProfileScreen(
+                    homeManger: model,
+                    userModel: userModel,
+                    postModel: model
+                            .postById[FirebaseAuth.instance.currentUser!.uid] ??
+                        [],
+                  ),
+                ),
+              ),
             ),
             btnBar(
               title: 'messanger',

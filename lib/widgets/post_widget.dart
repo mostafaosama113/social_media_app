@@ -2,8 +2,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:social_media_app/models/post_model.dart';
+import 'package:social_media_app/screens/home_screen/home_manger.dart';
 import 'package:social_media_app/screens/photo_viewer.dart';
+import 'package:social_media_app/screens/profile_screen/profile_screen.dart';
 import 'package:social_media_app/shared/colors.dart';
+import 'package:social_media_app/shared/navigator.dart';
 import 'package:timeago/timeago.dart' as timeago;
 import 'package:social_media_app/shared/manger/padding_manger.dart';
 import 'package:social_media_app/shared/manger/text_style_manger.dart';
@@ -36,8 +39,15 @@ Widget btn({
 }
 
 class PostWidget extends StatefulWidget {
-  const PostWidget(this.postModel, {Key? key}) : super(key: key);
+  const PostWidget(
+      {Key? key,
+      required this.postModel,
+      this.isActive = true,
+      required this.homeManger})
+      : super(key: key);
   final PostModel postModel;
+  final HomeManger homeManger;
+  final bool isActive;
 
   @override
   _PostWidgetState createState() => _PostWidgetState();
@@ -64,9 +74,24 @@ class _PostWidgetState extends State<PostWidget> {
                 padding: defaultPadding,
                 child: Row(
                   children: [
-                    CircleAvatar(
-                      backgroundImage:
-                          NetworkImage(widget.postModel.userModel!.image),
+                    InkWell(
+                      onTap: () {
+                        if (widget.isActive) {
+                          Navigator.push(
+                              context,
+                              SlideRight(
+                                  screen: ProfileScreen(
+                                userModel: widget.postModel.userModel!,
+                                homeManger: widget.homeManger,
+                                postModel: widget.homeManger
+                                    .postById[widget.postModel.userId]!,
+                              )));
+                        }
+                      },
+                      child: CircleAvatar(
+                        backgroundImage:
+                            NetworkImage(widget.postModel.userModel!.image),
+                      ),
                     ),
                     SizedBox(
                       width: 10.w,
@@ -75,10 +100,25 @@ class _PostWidgetState extends State<PostWidget> {
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          widget.postModel.userModel!.name,
-                          style: defaultTextStyle.copyWith(
-                            fontWeight: FontWeight.bold,
+                        InkWell(
+                          onTap: () {
+                            if (widget.isActive) {
+                              Navigator.push(
+                                  context,
+                                  SlideRight(
+                                      screen: ProfileScreen(
+                                    userModel: widget.postModel.userModel!,
+                                    homeManger: widget.homeManger,
+                                    postModel: widget.homeManger
+                                        .postById[widget.postModel.userId]!,
+                                  )));
+                            }
+                          },
+                          child: Text(
+                            widget.postModel.userModel!.name,
+                            style: defaultTextStyle.copyWith(
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                         ),
                         SizedBox(height: 5.h),

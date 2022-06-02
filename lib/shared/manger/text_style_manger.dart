@@ -6,6 +6,8 @@ TextStyle defaultTextStyle = TextStyle(
   fontSize: 16.sp,
   height: 1.sp,
 );
+TextStyle defaultNameStyle =
+    TextStyle(fontSize: 20.sp, height: 1.sp, fontWeight: FontWeight.bold);
 TextStyle defaultHintStyle = TextStyle(
   fontSize: 13.sp,
   height: 1.sp,
