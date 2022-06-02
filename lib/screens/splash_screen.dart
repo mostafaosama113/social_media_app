@@ -8,9 +8,7 @@ import 'package:social_media_app/screens/home_screen/home_screen.dart';
 import 'package:social_media_app/screens/login_screen/login_screen.dart';
 import 'package:social_media_app/shared/colors.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:social_media_app/shared/manger/text_style_manger.dart';
 import 'package:social_media_app/shared/navigator.dart';
-import 'package:social_media_app/shared/string_manger.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -37,7 +35,7 @@ class _SplashScreenState extends State<SplashScreen> {
             .doc(user.uid)
             .get()
             .then((value) {
-          UserModel userModel = UserModel.fromJson(value.data()!);
+          UserModel userModel = UserModel.fromJson(value.id, value.data()!);
           Navigator.pushReplacement(
               context, SlideRight(screen: HomeScreen(userModel)));
         });

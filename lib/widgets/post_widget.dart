@@ -129,7 +129,10 @@ class _PostWidgetState extends State<PostWidget> {
                         ),
                         SizedBox(height: 5.h),
                         Text(
-                          timeago.format(DateTime.parse(widget.postModel.date)),
+                          timeago.format(
+                            DateTime.parse(widget.postModel.date),
+                            clock: widget.homeManger.dateTime,
+                          ),
                           style: defaultHintStyle,
                         )
                       ],

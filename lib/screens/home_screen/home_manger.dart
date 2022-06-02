@@ -4,15 +4,19 @@ import 'package:flutter/material.dart';
 import 'package:social_media_app/models/post_model.dart';
 import 'package:social_media_app/models/user_model.dart';
 import 'package:social_media_app/screens/login_screen/login_screen.dart';
+import 'package:social_media_app/shared/get_current_time.dart';
 import 'package:social_media_app/shared/navigator.dart';
 
 class HomeManger extends ChangeNotifier {
   bool isLoading = false;
   List<PostModel> posts = [];
   Map<String, List<PostModel>> postById = {};
-  void getPosts() {
+  DateTime? dateTime;
+  void getPosts() async {
     isLoading = true;
     notifyListeners();
+    String curTime = await getCurrentTime();
+    dateTime = DateTime.parse(curTime);
     FirebaseFirestore.instance
         .collection('posts')
         .orderBy('date', descending: true)
@@ -26,8 +30,8 @@ class HomeManger extends ChangeNotifier {
             .collection('users')
             .doc(model.userId)
             .get();
-        model.userModel =
-            UserModel.fromJson(snapshot.data() as Map<String, dynamic>);
+        model.userModel = UserModel.fromJson(
+            snapshot.id, snapshot.data() as Map<String, dynamic>);
         posts.add(model);
         if (postById[model.userId] == null) postById[model.userId] = [];
         postById[model.userId]!.add(model);

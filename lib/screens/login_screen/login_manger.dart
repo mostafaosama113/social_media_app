@@ -33,7 +33,7 @@ class LoginManger extends ChangeNotifier {
           .doc(FirebaseAuth.instance.currentUser!.uid)
           .get()
           .then((value) {
-        UserModel userModel = UserModel.fromJson(value.data()!);
+        UserModel userModel = UserModel.fromJson(value.id, value.data()!);
         isLoading = false;
         notifyListeners();
         Navigator.pushReplacement(
