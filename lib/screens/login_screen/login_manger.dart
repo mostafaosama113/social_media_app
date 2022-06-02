@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:social_media_app/models/user_model.dart';
 import 'package:social_media_app/screens/home_screen/home_screen.dart';
 import 'package:social_media_app/shared/navigator.dart';
-import 'package:social_media_app/shared/toast.dart';
+import 'package:social_media_app/components/toast.dart';
 
 class LoginManger extends ChangeNotifier {
   bool isLoading = false;

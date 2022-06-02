@@ -9,7 +9,7 @@ import 'package:social_media_app/shared/manger/padding_manger.dart';
 import 'package:social_media_app/shared/manger/text_style_manger.dart';
 import 'package:social_media_app/widgets/loading_widget.dart';
 
-import '../../shared/roundbutton.dart';
+import '../../components/roundbutton.dart';
 
 class LoginScreen extends StatelessWidget {
   LoginScreen({Key? key}) : super(key: key);
