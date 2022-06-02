@@ -75,6 +75,9 @@ class _PostWidgetState extends State<PostWidget> {
                 child: Row(
                   children: [
                     InkWell(
+                      splashColor: Colors.transparent,
+                      highlightColor: Colors.transparent,
+                      enableFeedback: widget.isActive,
                       onTap: () {
                         if (widget.isActive) {
                           Navigator.push(
@@ -101,6 +104,9 @@ class _PostWidgetState extends State<PostWidget> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         InkWell(
+                          splashColor: Colors.transparent,
+                          highlightColor: Colors.transparent,
+                          enableFeedback: widget.isActive,
                           onTap: () {
                             if (widget.isActive) {
                               Navigator.push(

@@ -2,10 +2,12 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:social_media_app/models/user_model.dart';
 import 'package:social_media_app/screens/home_screen/home_screen.dart';
 import 'package:social_media_app/screens/login_screen/login_screen.dart';
 import 'package:social_media_app/shared/colors.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:social_media_app/shared/manger/text_style_manger.dart';
 import 'package:social_media_app/shared/navigator.dart';
 import 'package:social_media_app/shared/string_manger.dart';
@@ -58,9 +60,10 @@ class _SplashScreenState extends State<SplashScreen> {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           const SizedBox(width: double.infinity),
-          Text(
-            StringManger.appTitle,
-            style: logoTextStyle.copyWith(color: Colors.white),
+          Icon(
+            FontAwesomeIcons.facebook,
+            size: 150.r,
+            color: Colors.white,
           ),
         ],
       ),
