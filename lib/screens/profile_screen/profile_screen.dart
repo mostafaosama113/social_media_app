@@ -116,9 +116,16 @@ class ProfileScreen extends StatelessWidget {
                             ),
                           ),
                         ),
-                        Align(
-                          alignment: AlignmentDirectional.bottomEnd,
-                          child: cameraBtn(onClick: () {}),
+                        Row(
+                          children: [
+                            SizedBox(
+                              width: 72.w,
+                            ),
+                            Align(
+                              alignment: AlignmentDirectional.bottomStart,
+                              child: cameraBtn(onClick: () {}),
+                            ),
+                          ],
                         ),
                       ],
                     ),
