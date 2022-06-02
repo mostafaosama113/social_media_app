@@ -36,12 +36,12 @@ class ProfileScreen extends StatelessWidget {
             backgroundColor: Colors.white,
             radius: 20.r,
             child: CircleAvatar(
-              backgroundColor: Colors.grey,
+              backgroundColor: Colors.grey[350],
               radius: 18.5.r,
               child: Icon(
                 FontAwesomeIcons.camera,
                 size: 18.h,
-                color: Colors.white,
+                color: Colors.black,
               ),
             ),
           ),
@@ -53,118 +53,121 @@ class ProfileScreen extends StatelessWidget {
   }
 
   Widget getHeader(context) {
-    return Column(
-      children: [
-        SizedBox(
-          height: 250.h,
-          child: Stack(
-            children: [
-              InkWell(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => PhotoViewer(userModel.cover),
-                    ),
-                  );
-                },
-                child: Stack(
-                  children: [
-                    Image(
-                      image: NetworkImage(
-                        userModel.cover,
+    return Material(
+      elevation: 1,
+      child: Column(
+        children: [
+          SizedBox(
+            height: 250.h,
+            child: Stack(
+              children: [
+                InkWell(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => PhotoViewer(userModel.cover),
                       ),
-                      fit: BoxFit.fill,
-                      width: double.infinity,
-                      height: 200.h,
-                    ),
-                    cameraBtn(onClick: () {}),
-                  ],
+                    );
+                  },
+                  child: Stack(
+                    children: [
+                      Image(
+                        image: NetworkImage(
+                          userModel.cover,
+                        ),
+                        fit: BoxFit.fill,
+                        width: double.infinity,
+                        height: 200.h,
+                      ),
+                      cameraBtn(onClick: () {}),
+                    ],
+                  ),
                 ),
-              ),
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 8.w),
-                child: Align(
-                  alignment: AlignmentDirectional.bottomStart,
-                  child: SizedBox(
-                    width: 140.h,
-                    child: Stack(
-                      children: [
-                        Align(
-                          alignment: AlignmentDirectional.bottomStart,
-                          child: CircleAvatar(
-                            backgroundColor: Colors.white,
-                            radius: 60.r,
-                            child: Align(
-                              alignment: Alignment.center,
-                              child: InkWell(
-                                onTap: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) =>
-                                          PhotoViewer(userModel.image),
-                                    ),
-                                  );
-                                },
-                                child: CircleAvatar(
-                                  radius: 57.r,
-                                  backgroundImage:
-                                      NetworkImage(userModel.image),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 8.w),
+                  child: Align(
+                    alignment: AlignmentDirectional.bottomStart,
+                    child: SizedBox(
+                      width: 140.h,
+                      child: Stack(
+                        children: [
+                          Align(
+                            alignment: AlignmentDirectional.bottomStart,
+                            child: CircleAvatar(
+                              backgroundColor: Colors.white,
+                              radius: 60.r,
+                              child: Align(
+                                alignment: Alignment.center,
+                                child: InkWell(
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            PhotoViewer(userModel.image),
+                                      ),
+                                    );
+                                  },
+                                  child: CircleAvatar(
+                                    radius: 57.r,
+                                    backgroundImage:
+                                        NetworkImage(userModel.image),
+                                  ),
                                 ),
                               ),
                             ),
                           ),
-                        ),
-                        Row(
-                          children: [
-                            SizedBox(
-                              width: 72.w,
-                            ),
-                            Align(
-                              alignment: AlignmentDirectional.bottomStart,
-                              child: cameraBtn(onClick: () {}),
-                            ),
-                          ],
-                        ),
-                      ],
+                          Row(
+                            children: [
+                              SizedBox(
+                                width: 72.w,
+                              ),
+                              Align(
+                                alignment: AlignmentDirectional.bottomStart,
+                                child: cameraBtn(onClick: () {}),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
-              ),
-            ],
-          ),
-        ),
-        Padding(
-          padding: defaultPadding,
-          child: Align(
-            alignment: AlignmentDirectional.bottomStart,
-            child: Text(
-              userModel.name,
-              style: defaultNameStyle,
+              ],
             ),
           ),
-        ),
-        if (userModel.bio != null)
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 15),
+            padding: defaultPadding,
             child: Align(
               alignment: AlignmentDirectional.bottomStart,
               child: Text(
-                userModel.bio!,
-                style: defaultHintStyle,
+                userModel.name,
+                style: defaultNameStyle,
               ),
             ),
           ),
-        Padding(
-          padding: const EdgeInsets.only(top: 20),
-          child: Container(
-            color: Colors.grey,
-            height: 1,
-            width: double.infinity,
-          ),
-        )
-      ],
+          if (userModel.bio != null)
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 15),
+              child: Align(
+                alignment: AlignmentDirectional.bottomStart,
+                child: Text(
+                  userModel.bio!,
+                  style: defaultHintStyle,
+                ),
+              ),
+            ),
+          Padding(
+            padding: const EdgeInsets.only(top: 20),
+            child: Container(
+              color: Colors.grey,
+              height: 1,
+              width: double.infinity,
+            ),
+          )
+        ],
+      ),
     );
   }
 
@@ -180,20 +183,32 @@ class ProfileScreen extends StatelessWidget {
               style: logoTextStyle,
             ),
           ),
-          body: ListView.builder(
-            physics: const BouncingScrollPhysics(),
-            itemBuilder: (context, index) {
-              if (index == 0) {
-                return getHeader(context);
+          body: Builder(
+            builder: (context) {
+              if (postModel.isEmpty) {
+                return Column(
+                  children: [
+                    getHeader(context),
+                  ],
+                );
               } else {
-                return PostWidget(
-                  homeManger: homeManger,
-                  postModel: postModel[index - 1],
-                  isActive: false,
+                return ListView.builder(
+                  physics: const BouncingScrollPhysics(),
+                  itemBuilder: (context, index) {
+                    if (index == 0) {
+                      return getHeader(context);
+                    } else {
+                      return PostWidget(
+                        homeManger: homeManger,
+                        postModel: postModel[index - 1],
+                        isActive: false,
+                      );
+                    }
+                  },
+                  itemCount: postModel.length + 1,
                 );
               }
             },
-            itemCount: postModel.length + 1,
           ),
         ),
         if (false) loadingWidget(),
