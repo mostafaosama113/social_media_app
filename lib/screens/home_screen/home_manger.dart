@@ -30,8 +30,7 @@ class HomeManger extends ChangeNotifier {
             .collection('users')
             .doc(model.userId)
             .get();
-        model.userModel = UserModel.fromJson(
-            snapshot.id, snapshot.data() as Map<String, dynamic>);
+        model.userModel = UserModel.fromJson(snapshot);
         posts.add(model);
         if (postById[model.userId] == null) postById[model.userId] = [];
         postById[model.userId]!.add(model);

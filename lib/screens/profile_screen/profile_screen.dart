@@ -27,6 +27,8 @@ class ProfileScreen extends StatelessWidget {
   Widget cameraBtn({required Function onClick}) {
     if (userModel.uid == FirebaseAuth.instance.currentUser!.uid) {
       return InkWell(
+        splashColor: Colors.transparent,
+        highlightColor: Colors.transparent,
         onTap: () => onClick(),
         child: const Padding(
           padding: EdgeInsets.all(8.0),
@@ -46,7 +48,7 @@ class ProfileScreen extends StatelessWidget {
         ),
       );
     } else {
-      return SizedBox();
+      return const SizedBox();
     }
   }
 

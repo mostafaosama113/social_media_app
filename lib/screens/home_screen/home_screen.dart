@@ -11,7 +11,7 @@ import 'package:social_media_app/widgets/new_post_widget.dart';
 import 'package:social_media_app/widgets/post_widget.dart';
 
 class HomeScreen extends StatelessWidget {
-  HomeScreen(this.userModel, {Key? key}) : super(key: key);
+  const HomeScreen(this.userModel, {Key? key}) : super(key: key);
   final UserModel userModel;
 
   @override
