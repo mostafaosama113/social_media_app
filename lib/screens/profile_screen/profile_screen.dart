@@ -30,17 +30,17 @@ class ProfileScreen extends StatelessWidget {
         splashColor: Colors.transparent,
         highlightColor: Colors.transparent,
         onTap: () => onClick(),
-        child: const Padding(
-          padding: EdgeInsets.all(8.0),
+        child: Padding(
+          padding: EdgeInsets.all(8.r),
           child: CircleAvatar(
             backgroundColor: Colors.white,
-            radius: 20,
+            radius: 20.r,
             child: CircleAvatar(
               backgroundColor: Colors.grey,
-              radius: 18.5,
+              radius: 18.5.r,
               child: Icon(
                 FontAwesomeIcons.camera,
-                size: 18,
+                size: 18.h,
                 color: Colors.white,
               ),
             ),
@@ -55,7 +55,7 @@ class ProfileScreen extends StatelessWidget {
   Widget getHeader(context) {
     return Column(
       children: [
-        Container(
+        SizedBox(
           height: 250.h,
           child: Stack(
             children: [
@@ -86,8 +86,7 @@ class ProfileScreen extends StatelessWidget {
                 padding: EdgeInsets.symmetric(horizontal: 8.w),
                 child: Align(
                   alignment: AlignmentDirectional.bottomStart,
-                  child: Container(
-                    height: 150.h,
+                  child: SizedBox(
                     width: 140.h,
                     child: Stack(
                       children: [
