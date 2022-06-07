@@ -6,6 +6,7 @@ import 'package:social_media_app/screens/home_screen/home_manger.dart';
 import 'package:social_media_app/shared/colors.dart';
 import 'package:social_media_app/shared/manger/text_style_manger.dart';
 import 'package:social_media_app/shared/string_manger.dart';
+import 'package:social_media_app/static_access/mangers.dart';
 import 'package:social_media_app/widgets/loading_widget.dart';
 import 'package:social_media_app/widgets/new_post_widget.dart';
 import 'package:social_media_app/widgets/post_widget.dart';
@@ -17,7 +18,11 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (context) => HomeManger()..getPosts(),
+      create: (context) {
+        HomeManger manger = HomeManger(userModel)..getPosts();
+        StaticManger.homeManger = manger;
+        return manger;
+      },
       builder: (context, child) => Consumer<HomeManger>(
         builder: (context, model, child) {
           return Stack(

@@ -12,6 +12,9 @@ class HomeManger extends ChangeNotifier {
   List<PostModel> posts = [];
   Map<String, List<PostModel>> postById = {};
   DateTime? dateTime;
+  UserModel user;
+
+  HomeManger(this.user);
   void getPosts() async {
     isLoading = true;
     notifyListeners();
