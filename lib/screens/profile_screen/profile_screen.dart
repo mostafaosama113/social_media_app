@@ -57,6 +57,11 @@ class ProfileScreen extends StatelessWidget {
   Widget getHeader(context) {
     return Material(
       elevation: 1,
+      clipBehavior: Clip.antiAliasWithSaveLayer,
+      borderRadius: const BorderRadius.only(
+        topRight: Radius.circular(20),
+        topLeft: Radius.circular(20),
+      ),
       child: Column(
         children: [
           SizedBox(
@@ -72,33 +77,27 @@ class ProfileScreen extends StatelessWidget {
                       ),
                     );
                   },
-                  child: Material(
-                    clipBehavior: Clip.antiAliasWithSaveLayer,
-                    borderRadius: const BorderRadius.only(
-                        topRight: Radius.circular(15),
-                        topLeft: Radius.circular(15)),
-                    child: Stack(
-                      children: [
-                        Image(
-                          image: NetworkImage(
-                            userModel.cover,
-                          ),
-                          fit: BoxFit.fill,
-                          width: double.infinity,
-                          height: 200.h,
+                  child: Stack(
+                    children: [
+                      Image(
+                        image: NetworkImage(
+                          userModel.cover,
                         ),
-                        cameraBtn(onClick: () {
-                          Navigator.push(
-                            context,
-                            SlideRight(
-                              screen: const UpdatePictureScreen(
-                                type: PicType.cover,
-                              ),
+                        fit: BoxFit.fill,
+                        width: double.infinity,
+                        height: 200.h,
+                      ),
+                      cameraBtn(onClick: () {
+                        Navigator.push(
+                          context,
+                          SlideRight(
+                            screen: const UpdatePictureScreen(
+                              type: PicType.cover,
                             ),
-                          );
-                        }),
-                      ],
-                    ),
+                          ),
+                        );
+                      }),
+                    ],
                   ),
                 ),
                 Padding(
