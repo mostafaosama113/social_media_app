@@ -5,7 +5,7 @@ import 'package:social_media_app/shared/colors.dart';
 import 'package:social_media_app/shared/manger/padding_manger.dart';
 import 'package:social_media_app/shared/manger/text_style_manger.dart';
 import 'package:social_media_app/widgets/loading_widget.dart';
-
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../models/picture_model.dart';
 
 enum PicType { profile, cover }
@@ -53,7 +53,7 @@ class _UpdatePictureScreenState extends State<UpdatePictureScreen> {
             children: [
               Scaffold(
                 appBar: AppBar(
-                  automaticallyImplyLeading: false,
+                  titleSpacing: 0,
                   title: Text(
                     'Update ${widget.type == PicType.profile ? 'Profile' : 'Cover'} Picture',
                     style: logoTextStyle.copyWith(
@@ -65,15 +65,15 @@ class _UpdatePictureScreenState extends State<UpdatePictureScreen> {
                       onPressed: () {
                         model.update(context);
                       },
-                      child: const Text('Done'),
+                      child: const Icon(Icons.check),
                     )
                   ],
                 ),
                 body: GridView.count(
                   padding: defaultPadding,
                   crossAxisCount: 3,
-                  crossAxisSpacing: 4,
-                  mainAxisSpacing: 8,
+                  crossAxisSpacing: 4.w,
+                  mainAxisSpacing: 8.w,
                   children: [
                     for (PictureModel picture in model.pictures)
                       getPicFrame(
@@ -89,7 +89,7 @@ class _UpdatePictureScreenState extends State<UpdatePictureScreen> {
                   ],
                 ),
                 floatingActionButton: FloatingActionButton(
-                  onPressed: () {},
+                  onPressed: () => model.upload(),
                   backgroundColor: MyColor.blue,
                   child: const Icon(
                     Icons.add,

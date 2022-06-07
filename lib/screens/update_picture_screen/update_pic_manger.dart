@@ -1,8 +1,10 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:social_media_app/models/picture_model.dart';
 import 'package:social_media_app/screens/home_screen/home_manger.dart';
 import 'package:social_media_app/screens/update_picture_screen/update_picture_screen.dart';
@@ -65,5 +67,30 @@ class UpdatePicManger extends ChangeNotifier {
     homeManger.getPosts();
     Navigator.pop(context);
     Navigator.pop(context);
+  }
+
+  void upload() async {
+    final ImagePicker picker = ImagePicker();
+    final XFile? image = await picker.pickImage(source: ImageSource.gallery);
+
+    isLoading = true;
+    notifyListeners();
+    if (image != null) {
+      File file = File(image.path);
+      String uid = FirebaseAuth.instance.currentUser!.uid;
+      UploadTask uploadTask = FirebaseStorage.instance
+          .ref()
+          .child(
+              '$uid/personal_picture/${Uri.file(image.path).pathSegments.last}}')
+          .putFile(file);
+      String url = await (await uploadTask).ref.getDownloadURL();
+      for (PictureModel picture in pictures) {
+        picture.isSelected = false;
+      }
+      PictureModel model = PictureModel(link: url, isSelected: true);
+      pictures.add(model);
+      isLoading = false;
+      notifyListeners();
+    }
   }
 }

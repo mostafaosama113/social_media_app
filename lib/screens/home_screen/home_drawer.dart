@@ -38,6 +38,7 @@ Widget homeDrawer(
             ),
             SizedBox(height: 16.h),
             btnBar(
+              context: context,
               title: 'View profile',
               icon: FontAwesomeIcons.user,
               onClick: () => Navigator.push(
@@ -54,16 +55,19 @@ Widget homeDrawer(
               ),
             ),
             btnBar(
+              context: context,
               title: 'messanger',
               icon: FontAwesomeIcons.facebookMessenger,
               onClick: () {},
             ),
             btnBar(
+              context: context,
               title: 'Setting',
               icon: FontAwesomeIcons.gear,
               onClick: () {},
             ),
             btnBar(
+              context: context,
               title: 'Sign out',
               icon: FontAwesomeIcons.arrowRightFromBracket,
               onClick: () => model.signOut(context),
@@ -76,6 +80,7 @@ Widget homeDrawer(
 }
 
 Widget btnBar({
+  required BuildContext context,
   required String title,
   required IconData icon,
   required Function onClick,
@@ -89,7 +94,10 @@ Widget btnBar({
           color: MyColor.blue,
         ),
         TextButton(
-          onPressed: () => onClick(),
+          onPressed: () {
+            Navigator.pop(context);
+            onClick();
+          },
           child: Text(
             title,
             style: defaultTextStyle,
