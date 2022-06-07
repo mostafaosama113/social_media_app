@@ -5,8 +5,10 @@ import 'package:social_media_app/models/post_model.dart';
 import 'package:social_media_app/models/user_model.dart';
 import 'package:social_media_app/screens/home_screen/home_manger.dart';
 import 'package:social_media_app/screens/photo_viewer.dart';
+import 'package:social_media_app/screens/update_picture_screen/update_picture_screen.dart';
 import 'package:social_media_app/shared/manger/padding_manger.dart';
 import 'package:social_media_app/shared/manger/text_style_manger.dart';
+import 'package:social_media_app/shared/navigator.dart';
 import 'package:social_media_app/widgets/loading_widget.dart';
 import 'package:social_media_app/widgets/post_widget.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -80,7 +82,16 @@ class ProfileScreen extends StatelessWidget {
                         width: double.infinity,
                         height: 200.h,
                       ),
-                      cameraBtn(onClick: () {}),
+                      cameraBtn(onClick: () {
+                        Navigator.push(
+                          context,
+                          SlideRight(
+                            screen: const UpdatePictureScreen(
+                              type: PicType.cover,
+                            ),
+                          ),
+                        );
+                      }),
                     ],
                   ),
                 ),
@@ -125,7 +136,16 @@ class ProfileScreen extends StatelessWidget {
                               ),
                               Align(
                                 alignment: AlignmentDirectional.bottomStart,
-                                child: cameraBtn(onClick: () {}),
+                                child: cameraBtn(onClick: () {
+                                  Navigator.push(
+                                    context,
+                                    SlideRight(
+                                      screen: const UpdatePictureScreen(
+                                        type: PicType.profile,
+                                      ),
+                                    ),
+                                  );
+                                }),
                               ),
                             ],
                           ),
