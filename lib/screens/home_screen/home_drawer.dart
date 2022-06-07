@@ -91,7 +91,7 @@ Widget btnBar({
       children: [
         Icon(
           icon,
-          color: MyColor.blue,
+          color: MyColor.lightBlue,
         ),
         TextButton(
           onPressed: () {

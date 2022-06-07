@@ -186,7 +186,7 @@ class _PostWidgetState extends State<PostWidget> {
                       icon: FontAwesomeIcons.solidHeart,
                       // icon: FontAwesomeIcons.heart,
                       title: 'Like',
-                      color: MyColor.blue,
+                      color: MyColor.red,
                       onClick: () {
                         //todo : like function
                       },
