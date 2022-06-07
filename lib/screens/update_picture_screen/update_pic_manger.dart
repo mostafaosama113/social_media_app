@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
@@ -38,7 +39,31 @@ class UpdatePicManger extends ChangeNotifier {
     notifyListeners();
   }
 
-  void update(context) {
+  void update(context) async {
+    isLoading = true;
+    notifyListeners();
+    HomeManger homeManger = StaticManger.homeManger!;
+    String selectedPhoto = '';
+    for (PictureModel picture in pictures) {
+      if (picture.isSelected) {
+        selectedPhoto = picture.link;
+        break;
+      }
+    }
+    await FirebaseFirestore.instance
+        .collection('users')
+        .doc(homeManger.user.uid)
+        .update({type == PicType.profile ? 'image' : 'cover': selectedPhoto});
+    if (type == PicType.profile) {
+      homeManger.user.image = selectedPhoto;
+    }
+    if (type == PicType.cover) {
+      homeManger.user.cover = selectedPhoto;
+    }
+    isLoading = false;
+    notifyListeners();
+    homeManger.getPosts();
+    Navigator.pop(context);
     Navigator.pop(context);
   }
 }

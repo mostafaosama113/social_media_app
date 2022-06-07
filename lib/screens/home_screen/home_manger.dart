@@ -16,6 +16,8 @@ class HomeManger extends ChangeNotifier {
 
   HomeManger(this.user);
   void getPosts() async {
+    posts = [];
+    postById.clear();
     isLoading = true;
     notifyListeners();
     String curTime = await getCurrentTime();
