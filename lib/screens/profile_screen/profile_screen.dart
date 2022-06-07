@@ -72,27 +72,33 @@ class ProfileScreen extends StatelessWidget {
                       ),
                     );
                   },
-                  child: Stack(
-                    children: [
-                      Image(
-                        image: NetworkImage(
-                          userModel.cover,
-                        ),
-                        fit: BoxFit.fill,
-                        width: double.infinity,
-                        height: 200.h,
-                      ),
-                      cameraBtn(onClick: () {
-                        Navigator.push(
-                          context,
-                          SlideRight(
-                            screen: const UpdatePictureScreen(
-                              type: PicType.cover,
-                            ),
+                  child: Material(
+                    clipBehavior: Clip.antiAliasWithSaveLayer,
+                    borderRadius: const BorderRadius.only(
+                        topRight: Radius.circular(15),
+                        topLeft: Radius.circular(15)),
+                    child: Stack(
+                      children: [
+                        Image(
+                          image: NetworkImage(
+                            userModel.cover,
                           ),
-                        );
-                      }),
-                    ],
+                          fit: BoxFit.fill,
+                          width: double.infinity,
+                          height: 200.h,
+                        ),
+                        cameraBtn(onClick: () {
+                          Navigator.push(
+                            context,
+                            SlideRight(
+                              screen: const UpdatePictureScreen(
+                                type: PicType.cover,
+                              ),
+                            ),
+                          );
+                        }),
+                      ],
+                    ),
                   ),
                 ),
                 Padding(
@@ -203,32 +209,35 @@ class ProfileScreen extends StatelessWidget {
               style: logoTextStyle,
             ),
           ),
-          body: Builder(
-            builder: (context) {
-              if (postModel.isEmpty) {
-                return Column(
-                  children: [
-                    getHeader(context),
-                  ],
-                );
-              } else {
-                return ListView.builder(
-                  physics: const BouncingScrollPhysics(),
-                  itemBuilder: (context, index) {
-                    if (index == 0) {
-                      return getHeader(context);
-                    } else {
-                      return PostWidget(
-                        homeManger: homeManger,
-                        postModel: postModel[index - 1],
-                        isActive: false,
-                      );
-                    }
-                  },
-                  itemCount: postModel.length + 1,
-                );
-              }
-            },
+          body: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 5),
+            child: Builder(
+              builder: (context) {
+                if (postModel.isEmpty) {
+                  return Column(
+                    children: [
+                      getHeader(context),
+                    ],
+                  );
+                } else {
+                  return ListView.builder(
+                    physics: const BouncingScrollPhysics(),
+                    itemBuilder: (context, index) {
+                      if (index == 0) {
+                        return getHeader(context);
+                      } else {
+                        return PostWidget(
+                          homeManger: homeManger,
+                          postModel: postModel[index - 1],
+                          isActive: false,
+                        );
+                      }
+                    },
+                    itemCount: postModel.length + 1,
+                  );
+                }
+              },
+            ),
           ),
         ),
         if (false) loadingWidget(),

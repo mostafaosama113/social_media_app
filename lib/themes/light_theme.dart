@@ -9,9 +9,9 @@ ThemeData lightTheme() {
       iconTheme: IconThemeData(color: MyColor.blue),
       backgroundColor: Colors.white,
       elevation: 0,
-      systemOverlayStyle: const SystemUiOverlayStyle(
-        statusBarIconBrightness: Brightness.dark,
-        statusBarColor: Colors.white,
+      systemOverlayStyle: SystemUiOverlayStyle(
+        statusBarIconBrightness: Brightness.light,
+        statusBarColor: MyColor.blue,
         // statusBarBrightness: Brightness.dark,
       ),
     ),

@@ -15,7 +15,10 @@ class UpdatePicManger extends ChangeNotifier {
   bool isLoading = false;
   BuildContext context;
   List<PictureModel> pictures = [];
-  UpdatePicManger({required this.type, required this.context}) {
+  UpdatePicManger({
+    required this.type,
+    required this.context,
+  }) {
     isLoading = true;
     notifyListeners();
     getAllPicture();
@@ -72,10 +75,9 @@ class UpdatePicManger extends ChangeNotifier {
   void upload() async {
     final ImagePicker picker = ImagePicker();
     final XFile? image = await picker.pickImage(source: ImageSource.gallery);
-
-    isLoading = true;
-    notifyListeners();
     if (image != null) {
+      isLoading = true;
+      notifyListeners();
       File file = File(image.path);
       String uid = FirebaseAuth.instance.currentUser!.uid;
       UploadTask uploadTask = FirebaseStorage.instance
