@@ -12,9 +12,9 @@ import 'package:social_media_app/widgets/new_post_widget.dart';
 import 'package:social_media_app/widgets/post_widget.dart';
 
 class HomeScreen extends StatelessWidget {
-  const HomeScreen(this.userModel, {Key? key}) : super(key: key);
+  HomeScreen(this.userModel, {Key? key}) : super(key: key);
   final UserModel userModel;
-
+  final refreshKey = GlobalKey<RefreshIndicatorState>();
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
@@ -36,19 +36,26 @@ class HomeScreen extends StatelessWidget {
                     style: logoTextStyle,
                   ),
                 ),
-                body: ListView.builder(
-                  physics: const BouncingScrollPhysics(),
-                  itemBuilder: (context, index) {
-                    if (index == 0) {
-                      return newPostWidget(model: userModel, context: context);
-                    } else {
-                      return PostWidget(
-                        homeManger: model,
-                        postModel: model.posts[index - 1],
-                      );
-                    }
+                body: RefreshIndicator(
+                  key: refreshKey,
+                  onRefresh: () async {
+                    await model.getPosts(isLoading: false);
                   },
-                  itemCount: 1 + model.posts.length,
+                  child: ListView.builder(
+                    physics: const BouncingScrollPhysics(),
+                    itemBuilder: (context, index) {
+                      if (index == 0) {
+                        return newPostWidget(
+                            model: userModel, context: context);
+                      } else {
+                        return PostWidget(
+                          homeManger: model,
+                          postModel: model.posts[index - 1],
+                        );
+                      }
+                    },
+                    itemCount: 1 + model.posts.length,
+                  ),
                 ),
                 drawer: homeDrawer(
                     context: context, userModel: userModel, model: model),

@@ -15,11 +15,13 @@ class HomeManger extends ChangeNotifier {
   UserModel user;
 
   HomeManger(this.user);
-  void getPosts() async {
+  Future getPosts({bool isLoading = true}) async {
     posts = [];
     postById.clear();
-    isLoading = true;
-    notifyListeners();
+    if (isLoading) {
+      isLoading = true;
+      notifyListeners();
+    }
     String curTime = await getCurrentTime();
     dateTime = DateTime.parse(curTime);
     FirebaseFirestore.instance
