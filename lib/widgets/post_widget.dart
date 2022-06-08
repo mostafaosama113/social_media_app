@@ -28,7 +28,7 @@ Widget postSetting({
       child: Material(
         borderRadius: BorderRadius.circular(5),
         clipBehavior: Clip.antiAliasWithSaveLayer,
-        elevation: 2,
+        elevation: 5,
         child: Container(
           height: 60.h,
           width: double.infinity,
