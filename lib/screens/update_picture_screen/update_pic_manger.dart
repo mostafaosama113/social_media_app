@@ -83,7 +83,7 @@ class UpdatePicManger extends ChangeNotifier {
       UploadTask uploadTask = FirebaseStorage.instance
           .ref()
           .child(
-              '$uid/personal_picture/${Uri.file(image.path).pathSegments.last}}')
+              '$uid/personal_picture/${Uri.file(image.path).pathSegments.last}')
           .putFile(file);
       String url = await (await uploadTask).ref.getDownloadURL();
       for (PictureModel picture in pictures) {

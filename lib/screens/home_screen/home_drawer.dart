@@ -5,6 +5,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:social_media_app/models/user_model.dart';
 import 'package:social_media_app/screens/home_screen/home_manger.dart';
 import 'package:social_media_app/screens/profile_screen/profile_screen.dart';
+import 'package:social_media_app/screens/setting/setting_screen.dart';
 import 'package:social_media_app/shared/navigator.dart';
 import '../../shared/colors.dart';
 import '../../shared/manger/text_style_manger.dart';
@@ -64,7 +65,14 @@ Widget homeDrawer(
               context: context,
               title: 'Setting',
               icon: FontAwesomeIcons.gear,
-              onClick: () {},
+              onClick: () {
+                Navigator.push(
+                  context,
+                  SlideRight(
+                    screen: SettingScreen(),
+                  ),
+                );
+              },
             ),
             btnBar(
               context: context,
