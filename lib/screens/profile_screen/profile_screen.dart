@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -81,7 +82,7 @@ class ProfileScreen extends StatelessWidget {
                   child: Stack(
                     children: [
                       Image(
-                        image: NetworkImage(
+                        image: CachedNetworkImageProvider(
                           gloableModel.userModel.cover,
                         ),
                         fit: BoxFit.fill,
@@ -128,7 +129,7 @@ class ProfileScreen extends StatelessWidget {
                                   },
                                   child: CircleAvatar(
                                     radius: 57.r,
-                                    backgroundImage: NetworkImage(
+                                    backgroundImage: CachedNetworkImageProvider(
                                         gloableModel.userModel.image),
                                   ),
                                 ),

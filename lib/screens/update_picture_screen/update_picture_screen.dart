@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:social_media_app/screens/update_picture_screen/update_pic_manger.dart';
@@ -21,7 +22,7 @@ Widget getPicFrame({
     child: Stack(
       alignment: Alignment.center,
       children: [
-        Image.network(picture.link),
+        Image(image: CachedNetworkImageProvider(picture.link)),
         if (picture.isSelected)
           Container(
             decoration: BoxDecoration(
