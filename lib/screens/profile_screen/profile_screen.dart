@@ -8,6 +8,7 @@ import 'package:social_media_app/screens/home_screen/home_manger.dart';
 import 'package:social_media_app/screens/photo_viewer.dart';
 import 'package:social_media_app/screens/profile_screen/profile_manger.dart';
 import 'package:social_media_app/screens/update_picture_screen/update_picture_screen.dart';
+import 'package:social_media_app/shared/colors.dart';
 import 'package:social_media_app/shared/manger/padding_manger.dart';
 import 'package:social_media_app/shared/manger/text_style_manger.dart';
 import 'package:social_media_app/shared/navigator.dart';
@@ -223,6 +224,20 @@ class ProfileScreen extends StatelessWidget {
                         return Column(
                           children: [
                             getHeader(context),
+                            SizedBox(
+                              height: 30.h,
+                            ),
+                            Icon(
+                              Icons.camera_alt,
+                              color: MyColor.grey,
+                              size: 100.r,
+                            ),
+                            Text(
+                              'No Posts Yet',
+                              style: logoTextStyle.copyWith(
+                                color: MyColor.grey,
+                              ),
+                            ),
                           ],
                         );
                       } else {
