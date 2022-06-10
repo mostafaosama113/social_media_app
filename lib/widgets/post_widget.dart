@@ -7,6 +7,7 @@ import 'package:social_media_app/screens/photo_viewer.dart';
 import 'package:social_media_app/screens/profile_screen/profile_screen.dart';
 import 'package:social_media_app/shared/colors.dart';
 import 'package:social_media_app/shared/navigator.dart';
+import 'package:social_media_app/static_access/mangers.dart';
 import 'package:timeago/timeago.dart' as timeago;
 import 'package:social_media_app/shared/manger/padding_manger.dart';
 import 'package:social_media_app/shared/manger/text_style_manger.dart';
@@ -208,7 +209,10 @@ class _PostWidgetState extends State<PostWidget> {
                                         title: 'Delete post',
                                         icon: Icons.delete,
                                         onClick: () {
-                                          //todo : delete post
+                                          HomeManger manger =
+                                              StaticManger.homeManger!;
+                                          manger.deletePost(
+                                              context, widget.postModel);
                                         },
                                       ),
                                     ],

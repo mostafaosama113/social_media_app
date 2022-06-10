@@ -31,8 +31,7 @@ class HomeManger extends ChangeNotifier {
         .then((value) async {
       List<QueryDocumentSnapshot> dataList = value.docs;
       for (QueryDocumentSnapshot data in dataList) {
-        PostModel model =
-            PostModel.fromJson(data.data() as Map<String, dynamic>);
+        PostModel model = PostModel.fromJson(data);
         DocumentSnapshot snapshot = await FirebaseFirestore.instance
             .collection('users')
             .doc(model.userId)
@@ -57,5 +56,33 @@ class HomeManger extends ChangeNotifier {
         Navigator.pushReplacement(context, SlideRight(screen: LoginScreen()));
       },
     );
+  }
+
+  Future addNewPost(PostModel model) async {
+    await FirebaseFirestore.instance.collection('posts').add(
+          model.toJson(),
+        );
+    posts.insert(0, model);
+    notifyListeners();
+  }
+
+  void deletePost(context, PostModel model) async {
+    isLoading = true;
+    notifyListeners();
+    await FirebaseFirestore.instance
+        .collection('posts')
+        .doc(model.postId)
+        .delete();
+    int index = 0;
+    for (PostModel temp in posts) {
+      if (temp.postId == model.postId) {
+        break;
+      }
+      index++;
+    }
+    posts.removeAt(index);
+    isLoading = false;
+    notifyListeners();
+    Navigator.pop(context);
   }
 }
