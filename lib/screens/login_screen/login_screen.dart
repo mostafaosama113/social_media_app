@@ -4,9 +4,11 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:social_media_app/components/input_field.dart';
 import 'package:social_media_app/screens/login_screen/login_manger.dart';
+import 'package:social_media_app/screens/register_screen/register_screen.dart';
 import 'package:social_media_app/shared/colors.dart';
 import 'package:social_media_app/shared/manger/padding_manger.dart';
 import 'package:social_media_app/shared/manger/text_style_manger.dart';
+import 'package:social_media_app/shared/navigator.dart';
 import 'package:social_media_app/widgets/loading_widget.dart';
 
 import '../../components/roundbutton.dart';
@@ -73,7 +75,12 @@ class LoginScreen extends StatelessWidget {
                               splashColor: Colors.transparent,
                               highlightColor: Colors.transparent,
                               onTap: () {
-                                //todo : navigate to register screen
+                                Navigator.push(
+                                  context,
+                                  SlideRight(
+                                    screen: RegisterScreen(),
+                                  ),
+                                );
                               },
                               child: Text(
                                 'sign up',

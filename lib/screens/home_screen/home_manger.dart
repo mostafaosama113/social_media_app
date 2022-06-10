@@ -17,6 +17,7 @@ class HomeManger extends ChangeNotifier {
   UserModel user;
 
   HomeManger(this.user);
+
   Future getPosts() async {
     posts = [];
     postById.clear();

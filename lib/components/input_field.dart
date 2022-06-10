@@ -12,12 +12,14 @@ class InputField extends StatefulWidget {
     this.icon,
     this.inputType = TextInputType.text,
     required this.controller,
+    this.maxLen,
   }) : super(key: key);
   final String hint;
   final bool isPass;
   final TextEditingController controller;
   final IconData? icon;
   final TextInputType inputType;
+  final int? maxLen;
   @override
   _InputFieldState createState() => _InputFieldState();
 }
@@ -30,11 +32,13 @@ class _InputFieldState extends State<InputField> {
       child: SizedBox(
         height: 60.h,
         child: TextField(
+          maxLength: widget.maxLen,
           controller: widget.controller,
           keyboardType: widget.inputType,
           obscureText: widget.isPass,
           style: defaultTextStyle,
           decoration: InputDecoration(
+            counterText: "",
             prefixIcon: widget.icon == null ? null : Icon(widget.icon),
             hintText: widget.hint,
             hintStyle: defaultTextStyle,
