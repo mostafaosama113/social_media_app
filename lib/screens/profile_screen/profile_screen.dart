@@ -233,6 +233,7 @@ class ProfileScreen extends StatelessWidget {
                                     color: MyColor.grey,
                                     size: 100.r,
                                   ),
+                                  SizedBox(height: 10.h),
                                   Text(
                                     'No Posts Yet',
                                     style: logoTextStyle.copyWith(
