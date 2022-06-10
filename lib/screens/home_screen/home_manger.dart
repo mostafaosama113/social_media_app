@@ -102,14 +102,16 @@ class HomeManger extends ChangeNotifier {
     notifyListeners();
     if (!isActive) {
       index = 0;
+      bool exit = false;
       for (PostModel temp in manger!.postModel) {
         print(temp.postId);
         if (temp.postId == model.postId) {
+          exit = true;
           break;
         }
         index++;
       }
-      manger.postModel.removeAt(index);
+      if (exit) manger.postModel.removeAt(index);
       manger.isLoading = false;
       manger.notifyListeners();
     }
