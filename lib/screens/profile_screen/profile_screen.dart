@@ -20,14 +20,14 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../shared/string_manger.dart';
 
 class ProfileScreen extends StatelessWidget {
-  ProfileScreen({Key? key, required this.postModel, required this.userModel})
+  ProfileScreen({Key? key, required this.postModel, required this.user})
       : super(key: key);
-
+  late ProfileManger gloableModel;
   final List<PostModel> postModel;
   final HomeManger homeManger = StaticManger.homeManger!;
-  final UserModel userModel;
+  final UserModel user;
   Widget cameraBtn({required Function onClick}) {
-    if (userModel.uid == FirebaseAuth.instance.currentUser!.uid) {
+    if (gloableModel.userModel.uid == FirebaseAuth.instance.currentUser!.uid) {
       return InkWell(
         splashColor: Colors.transparent,
         highlightColor: Colors.transparent,
@@ -73,7 +73,8 @@ class ProfileScreen extends StatelessWidget {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => PhotoViewer(userModel.cover),
+                        builder: (context) =>
+                            PhotoViewer(gloableModel.userModel.cover),
                       ),
                     );
                   },
@@ -81,7 +82,7 @@ class ProfileScreen extends StatelessWidget {
                     children: [
                       Image(
                         image: NetworkImage(
-                          userModel.cover,
+                          gloableModel.userModel.cover,
                         ),
                         fit: BoxFit.fill,
                         width: double.infinity,
@@ -120,15 +121,15 @@ class ProfileScreen extends StatelessWidget {
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                        builder: (context) =>
-                                            PhotoViewer(userModel.image),
+                                        builder: (context) => PhotoViewer(
+                                            gloableModel.userModel.image),
                                       ),
                                     );
                                   },
                                   child: CircleAvatar(
                                     radius: 57.r,
-                                    backgroundImage:
-                                        NetworkImage(userModel.image),
+                                    backgroundImage: NetworkImage(
+                                        gloableModel.userModel.image),
                                   ),
                                 ),
                               ),
@@ -167,18 +168,18 @@ class ProfileScreen extends StatelessWidget {
             child: Align(
               alignment: AlignmentDirectional.bottomStart,
               child: Text(
-                userModel.name,
+                gloableModel.userModel.name,
                 style: defaultNameStyle,
               ),
             ),
           ),
-          if (userModel.bio != null)
+          if (gloableModel.userModel.bio != null)
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 15),
               child: Align(
                 alignment: AlignmentDirectional.bottomStart,
                 child: Text(
-                  userModel.bio!,
+                  gloableModel.userModel.bio!,
                   style: defaultHintStyle,
                 ),
               ),
@@ -200,8 +201,12 @@ class ProfileScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
       create: (context) {
-        ProfileManger manger = ProfileManger(postModel);
+        ProfileManger manger = ProfileManger(
+          postModel: postModel,
+          userModel: user,
+        );
         StaticManger.profileManger = manger;
+        gloableModel = manger;
         return manger;
       },
       builder: (context, child) => Consumer<ProfileManger>(

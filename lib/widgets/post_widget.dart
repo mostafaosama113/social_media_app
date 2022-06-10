@@ -131,7 +131,7 @@ class _PostWidgetState extends State<PostWidget> {
                               context,
                               SlideRight(
                                   screen: ProfileScreen(
-                                userModel: widget.postModel.userModel!,
+                                user: widget.postModel.userModel!,
                                 postModel: widget.homeManger
                                     .postById[widget.postModel.userId]!,
                               )));
@@ -159,7 +159,7 @@ class _PostWidgetState extends State<PostWidget> {
                                   context,
                                   SlideRight(
                                       screen: ProfileScreen(
-                                    userModel: widget.postModel.userModel!,
+                                    user: widget.postModel.userModel!,
                                     postModel: widget.homeManger
                                         .postById[widget.postModel.userId]!,
                                   )));

@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:social_media_app/models/picture_model.dart';
 import 'package:social_media_app/screens/home_screen/home_manger.dart';
+import 'package:social_media_app/screens/profile_screen/profile_manger.dart';
 import 'package:social_media_app/screens/update_picture_screen/update_picture_screen.dart';
 import 'package:social_media_app/static_access/mangers.dart';
 
@@ -55,20 +56,22 @@ class UpdatePicManger extends ChangeNotifier {
         break;
       }
     }
+    ProfileManger profileManger = StaticManger.profileManger!;
     await FirebaseFirestore.instance
         .collection('users')
         .doc(homeManger.user.uid)
         .update({type == PicType.profile ? 'image' : 'cover': selectedPhoto});
     if (type == PicType.profile) {
       homeManger.user.image = selectedPhoto;
+      profileManger.userModel.image = selectedPhoto;
     }
     if (type == PicType.cover) {
-      homeManger.user.cover = selectedPhoto;
+      profileManger.userModel.cover = selectedPhoto;
     }
     isLoading = false;
     notifyListeners();
     homeManger.getPosts();
-    Navigator.pop(context);
+    profileManger.notifyListeners();
     Navigator.pop(context);
   }
 
