@@ -38,9 +38,7 @@ class HomeScreen extends StatelessWidget {
                 ),
                 body: RefreshIndicator(
                   key: refreshKey,
-                  onRefresh: () async {
-                    await model.getPosts(isLoading: false);
-                  },
+                  onRefresh: () async => await model.getPosts(),
                   child: ListView.builder(
                     physics: const BouncingScrollPhysics(),
                     itemBuilder: (context, index) {

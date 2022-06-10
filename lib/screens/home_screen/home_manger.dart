@@ -4,8 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:social_media_app/models/post_model.dart';
 import 'package:social_media_app/models/user_model.dart';
 import 'package:social_media_app/screens/login_screen/login_screen.dart';
+import 'package:social_media_app/screens/profile_screen/profile_manger.dart';
 import 'package:social_media_app/shared/get_current_time.dart';
 import 'package:social_media_app/shared/navigator.dart';
+import 'package:social_media_app/static_access/mangers.dart';
 
 class HomeManger extends ChangeNotifier {
   bool isLoading = false;
@@ -15,13 +17,11 @@ class HomeManger extends ChangeNotifier {
   UserModel user;
 
   HomeManger(this.user);
-  Future getPosts({bool isLoading = true}) async {
+  Future getPosts() async {
     posts = [];
     postById.clear();
-    if (isLoading) {
-      isLoading = true;
-      notifyListeners();
-    }
+    isLoading = true;
+    notifyListeners();
     String curTime = await getCurrentTime();
     dateTime = DateTime.parse(curTime);
     FirebaseFirestore.instance
@@ -59,15 +59,24 @@ class HomeManger extends ChangeNotifier {
   }
 
   Future addNewPost(PostModel model) async {
-    await FirebaseFirestore.instance.collection('posts').add(
-          model.toJson(),
-        );
+    DocumentReference ref =
+        await FirebaseFirestore.instance.collection('posts').add(
+              model.toJson(),
+            );
+    model.postId = ref.id;
     posts.insert(0, model);
+    if (postById[user.uid] == null) postById.addAll({});
+    postById[user.uid]!.insert(0, model);
     notifyListeners();
   }
 
-  void deletePost(context, PostModel model) async {
+  void deletePost(context, PostModel model, bool isActive) async {
     isLoading = true;
+    ProfileManger? manger = StaticManger.profileManger;
+    if (!isActive) {
+      manger!.isLoading = true;
+      manger.notifyListeners();
+    }
     notifyListeners();
     await FirebaseFirestore.instance
         .collection('posts')
@@ -81,8 +90,21 @@ class HomeManger extends ChangeNotifier {
       index++;
     }
     posts.removeAt(index);
+    index = 0;
+    for (PostModel temp in postById[user.uid]!) {
+      if (temp.postId == model.postId) {
+        break;
+      }
+      index++;
+    }
+    postById[user.uid]!.removeAt(index);
     isLoading = false;
     notifyListeners();
+    if (!isActive) {
+      manger!.postModel = postById[user.uid]!;
+      manger.isLoading = false;
+      manger.notifyListeners();
+    }
     Navigator.pop(context);
   }
 }

@@ -132,7 +132,6 @@ class _PostWidgetState extends State<PostWidget> {
                               SlideRight(
                                   screen: ProfileScreen(
                                 userModel: widget.postModel.userModel!,
-                                homeManger: widget.homeManger,
                                 postModel: widget.homeManger
                                     .postById[widget.postModel.userId]!,
                               )));
@@ -161,7 +160,6 @@ class _PostWidgetState extends State<PostWidget> {
                                   SlideRight(
                                       screen: ProfileScreen(
                                     userModel: widget.postModel.userModel!,
-                                    homeManger: widget.homeManger,
                                     postModel: widget.homeManger
                                         .postById[widget.postModel.userId]!,
                                   )));
@@ -212,7 +210,9 @@ class _PostWidgetState extends State<PostWidget> {
                                           HomeManger manger =
                                               StaticManger.homeManger!;
                                           manger.deletePost(
-                                              context, widget.postModel);
+                                              context,
+                                              widget.postModel,
+                                              widget.isActive);
                                         },
                                       ),
                                     ],

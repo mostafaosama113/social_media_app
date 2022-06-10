@@ -1,14 +1,17 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:provider/provider.dart';
 import 'package:social_media_app/models/post_model.dart';
 import 'package:social_media_app/models/user_model.dart';
 import 'package:social_media_app/screens/home_screen/home_manger.dart';
 import 'package:social_media_app/screens/photo_viewer.dart';
+import 'package:social_media_app/screens/profile_screen/profile_manger.dart';
 import 'package:social_media_app/screens/update_picture_screen/update_picture_screen.dart';
 import 'package:social_media_app/shared/manger/padding_manger.dart';
 import 'package:social_media_app/shared/manger/text_style_manger.dart';
 import 'package:social_media_app/shared/navigator.dart';
+import 'package:social_media_app/static_access/mangers.dart';
 import 'package:social_media_app/widgets/loading_widget.dart';
 import 'package:social_media_app/widgets/post_widget.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -16,15 +19,11 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../shared/string_manger.dart';
 
 class ProfileScreen extends StatelessWidget {
-  const ProfileScreen(
-      {Key? key,
-      required this.postModel,
-      required this.homeManger,
-      required this.userModel})
+  ProfileScreen({Key? key, required this.postModel, required this.userModel})
       : super(key: key);
 
   final List<PostModel> postModel;
-  final HomeManger homeManger;
+  final HomeManger homeManger = StaticManger.homeManger!;
   final UserModel userModel;
   Widget cameraBtn({required Function onClick}) {
     if (userModel.uid == FirebaseAuth.instance.currentUser!.uid) {
@@ -198,49 +197,60 @@ class ProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        Scaffold(
-          appBar: AppBar(
-            titleSpacing: 0,
-            title: Text(
-              StringManger.appTitle,
-              style: logoTextStyle,
-            ),
-          ),
-          body: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 5),
-            child: Builder(
-              builder: (context) {
-                if (postModel.isEmpty) {
-                  return Column(
-                    children: [
-                      getHeader(context),
-                    ],
-                  );
-                } else {
-                  return ListView.builder(
-                    physics: const BouncingScrollPhysics(),
-                    itemBuilder: (context, index) {
-                      if (index == 0) {
-                        return getHeader(context);
+    return ChangeNotifierProvider(
+      create: (context) {
+        ProfileManger manger = ProfileManger(postModel);
+        StaticManger.profileManger = manger;
+        return manger;
+      },
+      builder: (context, child) => Consumer<ProfileManger>(
+        builder: (context, model, child) {
+          return Stack(
+            children: [
+              Scaffold(
+                appBar: AppBar(
+                  titleSpacing: 0,
+                  title: Text(
+                    StringManger.appTitle,
+                    style: logoTextStyle,
+                  ),
+                ),
+                body: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 5),
+                  child: Builder(
+                    builder: (context) {
+                      if (model.postModel.isEmpty) {
+                        return Column(
+                          children: [
+                            getHeader(context),
+                          ],
+                        );
                       } else {
-                        return PostWidget(
-                          homeManger: homeManger,
-                          postModel: postModel[index - 1],
-                          isActive: false,
+                        return ListView.builder(
+                          physics: const BouncingScrollPhysics(),
+                          itemBuilder: (context, index) {
+                            if (index == 0) {
+                              return getHeader(context);
+                            } else {
+                              return PostWidget(
+                                homeManger: homeManger,
+                                postModel: postModel[index - 1],
+                                isActive: false,
+                              );
+                            }
+                          },
+                          itemCount: postModel.length + 1,
                         );
                       }
                     },
-                    itemCount: postModel.length + 1,
-                  );
-                }
-              },
-            ),
-          ),
-        ),
-        if (false) loadingWidget(),
-      ],
+                  ),
+                ),
+              ),
+              if (model.isLoading) loadingWidget(),
+            ],
+          );
+        },
+      ),
     );
   }
 }

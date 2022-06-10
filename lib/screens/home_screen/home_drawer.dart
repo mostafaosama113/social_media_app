@@ -46,7 +46,6 @@ Widget homeDrawer(
                 context,
                 SlideRight(
                   screen: ProfileScreen(
-                    homeManger: model,
                     userModel: userModel,
                     postModel: model
                             .postById[FirebaseAuth.instance.currentUser!.uid] ??
