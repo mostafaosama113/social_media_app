@@ -224,20 +224,24 @@ class ProfileScreen extends StatelessWidget {
                         return Column(
                           children: [
                             getHeader(context),
-                            SizedBox(
-                              height: 30.h,
-                            ),
-                            Icon(
-                              Icons.camera_alt,
-                              color: MyColor.grey,
-                              size: 100.r,
-                            ),
-                            Text(
-                              'No Posts Yet',
-                              style: logoTextStyle.copyWith(
-                                color: MyColor.grey,
+                            Expanded(
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Icon(
+                                    Icons.camera_alt,
+                                    color: MyColor.grey,
+                                    size: 100.r,
+                                  ),
+                                  Text(
+                                    'No Posts Yet',
+                                    style: logoTextStyle.copyWith(
+                                      color: MyColor.grey,
+                                    ),
+                                  ),
+                                ],
                               ),
-                            ),
+                            )
                           ],
                         );
                       } else {
