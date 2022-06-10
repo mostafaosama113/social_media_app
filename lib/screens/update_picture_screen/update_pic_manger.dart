@@ -63,9 +63,16 @@ class UpdatePicManger extends ChangeNotifier {
         .update({type == PicType.profile ? 'image' : 'cover': selectedPhoto});
     if (type == PicType.profile) {
       homeManger.user.image = selectedPhoto;
+      for (var post in profileManger.postModel) {
+        post.userModel!.image = selectedPhoto;
+      }
       profileManger.userModel.image = selectedPhoto;
     }
     if (type == PicType.cover) {
+      homeManger.user.cover = selectedPhoto;
+      for (var post in profileManger.postModel) {
+        post.userModel!.cover = selectedPhoto;
+      }
       profileManger.userModel.cover = selectedPhoto;
     }
     isLoading = false;
