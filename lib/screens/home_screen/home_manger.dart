@@ -104,7 +104,6 @@ class HomeManger extends ChangeNotifier {
       index = 0;
       bool exit = false;
       for (PostModel temp in manger!.postModel) {
-        print(temp.postId);
         if (temp.postId == model.postId) {
           exit = true;
           break;
