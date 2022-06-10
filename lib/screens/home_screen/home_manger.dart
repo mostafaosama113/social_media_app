@@ -72,12 +72,12 @@ class HomeManger extends ChangeNotifier {
 
   void deletePost(context, PostModel model, bool isActive) async {
     isLoading = true;
+    notifyListeners();
     ProfileManger? manger = StaticManger.profileManger;
     if (!isActive) {
       manger!.isLoading = true;
       manger.notifyListeners();
     }
-    notifyListeners();
     await FirebaseFirestore.instance
         .collection('posts')
         .doc(model.postId)
@@ -101,7 +101,15 @@ class HomeManger extends ChangeNotifier {
     isLoading = false;
     notifyListeners();
     if (!isActive) {
-      manger!.postModel = postById[user.uid]!;
+      index = 0;
+      for (PostModel temp in manger!.postModel) {
+        print(temp.postId);
+        if (temp.postId == model.postId) {
+          break;
+        }
+        index++;
+      }
+      manger.postModel.removeAt(index);
       manger.isLoading = false;
       manger.notifyListeners();
     }
