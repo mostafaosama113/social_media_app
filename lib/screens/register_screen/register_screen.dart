@@ -8,6 +8,7 @@ import 'package:social_media_app/screens/home_screen/home_screen.dart';
 import 'package:social_media_app/shared/manger/padding_manger.dart';
 import 'package:social_media_app/shared/manger/text_style_manger.dart';
 import 'package:social_media_app/shared/navigator.dart';
+import 'package:social_media_app/shared/string_manger.dart';
 import '../../components/toast.dart';
 import '../../widgets/loading_widget.dart';
 
@@ -50,10 +51,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
           String uid = user.user!.uid;
           FirebaseFirestore.instance.collection('users').doc(uid).set({
             'name': name.text,
-            'image':
-                'https://firebasestorage.googleapis.com/v0/b/socialmediaapp-c4b09.appspot.com/o/img_avatar.png?alt=media&token=1c99582a-e627-4403-ad81-e83ed5567632',
-            'cover':
-                'https://firebasestorage.googleapis.com/v0/b/socialmediaapp-c4b09.appspot.com/o/cover.jpg?alt=media&token=7f743694-bbb3-42d8-8ca6-159a7d6bda45',
+            'image': StringManger.defaultProfileImage,
+            'cover': StringManger.defaultProfileCover,
           }).then((value) {
             setState(() {
               isLoading = false;
@@ -63,10 +62,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
               SlideRight(
                 screen: HomeScreen(
                   UserModel(
-                    image:
-                        'https://firebasestorage.googleapis.com/v0/b/socialmediaapp-c4b09.appspot.com/o/img_avatar.png?alt=media&token=1c99582a-e627-4403-ad81-e83ed5567632',
-                    cover:
-                        'https://firebasestorage.googleapis.com/v0/b/socialmediaapp-c4b09.appspot.com/o/cover.jpg?alt=media&token=7f743694-bbb3-42d8-8ca6-159a7d6bda45',
+                    image: StringManger.defaultProfileImage,
+                    cover: StringManger.defaultProfileCover,
                     name: name.text,
                     uid: user.user!.uid,
                   ),
