@@ -71,6 +71,27 @@ class HomeManger extends ChangeNotifier {
     notifyListeners();
   }
 
+  Future updatePost(PostModel model, String uid) async {
+    model.postId = uid;
+    await FirebaseFirestore.instance.collection('posts').doc(uid).update(
+          model.toJson(),
+        );
+    for (int i = 0; i < posts.length; i++) {
+      if (posts[i].postId == uid) {
+        posts[i] = model;
+      }
+    }
+    for (int i = 0; i < postById[user.uid]!.length; i++) {
+      if (postById[user.uid]![i].postId == uid) {
+        postById[user.uid]![i] = model;
+      }
+    }
+    if (StaticManger.profileManger != null) {
+      StaticManger.profileManger!.notifyListeners();
+    }
+    notifyListeners();
+  }
+
   void deletePost(context, PostModel model, bool isActive) async {
     isLoading = true;
     notifyListeners();

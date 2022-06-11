@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:social_media_app/models/post_model.dart';
+import 'package:social_media_app/screens/create_new_post/create_post_screen.dart';
 import 'package:social_media_app/screens/home_screen/home_manger.dart';
 import 'package:social_media_app/screens/photo_viewer.dart';
 import 'package:social_media_app/screens/profile_screen/profile_screen.dart';
@@ -200,7 +201,15 @@ class _PostWidgetState extends State<PostWidget> {
                                         title: 'Edit post',
                                         icon: Icons.edit,
                                         onClick: () {
-                                          //todo : edit post
+                                          Navigator.pop(context);
+                                          Navigator.push(
+                                            context,
+                                            SlideRight(
+                                              screen: CreateNewPostScreen(
+                                                postModel: widget.postModel,
+                                              ),
+                                            ),
+                                          );
                                         },
                                       ),
                                       postSetting(
@@ -210,9 +219,10 @@ class _PostWidgetState extends State<PostWidget> {
                                           HomeManger manger =
                                               StaticManger.homeManger!;
                                           manger.deletePost(
-                                              context,
-                                              widget.postModel,
-                                              widget.isActive);
+                                            context,
+                                            widget.postModel,
+                                            widget.isActive,
+                                          );
                                         },
                                       ),
                                     ],

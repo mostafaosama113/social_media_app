@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'dart:io';
-
+import 'package:network_to_file_image/network_to_file_image.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
@@ -19,8 +19,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:social_media_app/widgets/loading_widget.dart';
 
 class CreateNewPostScreen extends StatefulWidget {
-  const CreateNewPostScreen({Key? key}) : super(key: key);
-
+  const CreateNewPostScreen({Key? key, this.postModel}) : super(key: key);
+  final PostModel? postModel;
   @override
   _CreateNewPostScreenState createState() => _CreateNewPostScreenState();
 }
@@ -28,6 +28,32 @@ class CreateNewPostScreen extends StatefulWidget {
 class _CreateNewPostScreenState extends State<CreateNewPostScreen> {
   final HomeManger homeManger = StaticManger.homeManger!;
   final TextEditingController textController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    if (widget.postModel != null) {
+      editPost();
+    }
+  }
+
+  void editPost() async {
+    setState(() {
+      isLoading = true;
+    });
+    PostModel model = widget.postModel!;
+    if (model.image != null) {
+      setState(() {
+        photo = NetworkToFileImage(url: model.image).file;
+      });
+    }
+
+    if (model.content != null) textController.text = model.content!;
+    setState(() {
+      isLoading = false;
+    });
+  }
+
   bool isLoading = false;
   File? photo;
   void upload() async {
@@ -62,7 +88,12 @@ class _CreateNewPostScreenState extends State<CreateNewPostScreen> {
       content: text,
       userModel: user,
     );
-    await homeManger.addNewPost(model);
+
+    if (widget.postModel == null) {
+      await homeManger.addNewPost(model);
+    } else {
+      await homeManger.updatePost(model, widget.postModel!.postId);
+    }
 
     setState(() {
       isLoading = false;
