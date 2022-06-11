@@ -66,7 +66,7 @@ class HomeManger extends ChangeNotifier {
             );
     model.postId = ref.id;
     posts.insert(0, model);
-    if (postById[user.uid] == null) postById.addAll({});
+    if (postById[user.uid] == null) postById[user.uid] = [];
     postById[user.uid]!.insert(0, model);
     notifyListeners();
   }
