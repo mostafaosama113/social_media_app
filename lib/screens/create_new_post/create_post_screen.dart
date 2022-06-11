@@ -95,7 +95,11 @@ class _CreateNewPostScreenState extends State<CreateNewPostScreen> {
     if (widget.postModel == null) {
       await homeManger.addNewPost(model);
     } else {
-      await homeManger.updatePost(model, widget.postModel!.postId);
+      await homeManger.updatePost(
+        model,
+        widget.postModel!.postId,
+        widget.postModel!.date,
+      );
     }
 
     setState(() {

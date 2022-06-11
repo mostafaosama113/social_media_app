@@ -71,8 +71,9 @@ class HomeManger extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future updatePost(PostModel model, String uid) async {
+  Future updatePost(PostModel model, String uid, String date) async {
     model.postId = uid;
+    model.date = date;
     await FirebaseFirestore.instance.collection('posts').doc(uid).update(
           model.toJson(),
         );
