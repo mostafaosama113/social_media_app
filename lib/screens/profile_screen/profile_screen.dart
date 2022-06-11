@@ -20,13 +20,26 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../shared/string_manger.dart';
 
-class ProfileScreen extends StatelessWidget {
+class ProfileScreen extends StatefulWidget {
   ProfileScreen({Key? key, required this.postModel, required this.user})
       : super(key: key);
-  late ProfileManger gloableModel;
   final List<PostModel> postModel;
-  final HomeManger homeManger = StaticManger.homeManger!;
   final UserModel user;
+
+  @override
+  State<ProfileScreen> createState() => _ProfileScreenState();
+}
+
+class _ProfileScreenState extends State<ProfileScreen> {
+  late ProfileManger gloableModel;
+
+  final HomeManger homeManger = StaticManger.homeManger!;
+  @override
+  void dispose() {
+    super.dispose();
+    StaticManger.profileManger = null;
+  }
+
   Widget cameraBtn({required Function onClick}) {
     if (gloableModel.userModel.uid == FirebaseAuth.instance.currentUser!.uid) {
       return InkWell(
@@ -203,8 +216,8 @@ class ProfileScreen extends StatelessWidget {
     return ChangeNotifierProvider(
       create: (context) {
         ProfileManger manger = ProfileManger(
-          postModel: postModel,
-          userModel: user,
+          postModel: widget.postModel,
+          userModel: widget.user,
         );
         StaticManger.profileManger = manger;
         gloableModel = manger;
@@ -260,12 +273,12 @@ class ProfileScreen extends StatelessWidget {
                             } else {
                               return PostWidget(
                                 homeManger: homeManger,
-                                postModel: postModel[index - 1],
+                                postModel: widget.postModel[index - 1],
                                 isActive: false,
                               );
                             }
                           },
-                          itemCount: postModel.length + 1,
+                          itemCount: widget.postModel.length + 1,
                         );
                       }
                     },
