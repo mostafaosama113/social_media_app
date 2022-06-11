@@ -230,7 +230,8 @@ class _PostWidgetState extends State<PostWidget> {
                   ],
                 ),
               ),
-              if (widget.postModel.content != null)
+              if (widget.postModel.content != null &&
+                  widget.postModel.content!.isNotEmpty)
                 Padding(
                   padding: defaultPadding,
                   child: Align(
@@ -242,15 +243,22 @@ class _PostWidgetState extends State<PostWidget> {
                   ),
                 ),
               if (widget.postModel.image != null)
-                InkWell(
-                  onTap: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) =>
-                                PhotoViewer(widget.postModel.image!)));
-                  },
-                  child: Image.network(widget.postModel.image!),
+                Padding(
+                  padding: const EdgeInsets.all(5.0),
+                  child: Material(
+                    clipBehavior: Clip.antiAliasWithSaveLayer,
+                    borderRadius: BorderRadius.circular(5),
+                    child: InkWell(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    PhotoViewer(widget.postModel.image!)));
+                      },
+                      child: Image.network(widget.postModel.image!),
+                    ),
+                  ),
                 ),
               Container(
                 color: Colors.grey,
