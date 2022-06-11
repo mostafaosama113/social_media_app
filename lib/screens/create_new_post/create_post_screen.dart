@@ -1,11 +1,11 @@
-import 'dart:async';
 import 'dart:io';
-import 'package:network_to_file_image/network_to_file_image.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:path/path.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:social_media_app/components/toast.dart';
 import 'package:social_media_app/models/post_model.dart';
 import 'package:social_media_app/models/user_model.dart';
@@ -17,6 +17,7 @@ import 'package:social_media_app/shared/manger/text_style_manger.dart';
 import 'package:social_media_app/static_access/mangers.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:social_media_app/widgets/loading_widget.dart';
+import 'package:http/http.dart' as http;
 
 class CreateNewPostScreen extends StatefulWidget {
   const CreateNewPostScreen({Key? key, this.postModel}) : super(key: key);
@@ -43,9 +44,11 @@ class _CreateNewPostScreenState extends State<CreateNewPostScreen> {
     });
     PostModel model = widget.postModel!;
     if (model.image != null) {
-      setState(() {
-        photo = NetworkToFileImage(url: model.image).file;
-      });
+      var url = Uri.parse(model.image!);
+      final response = await http.get(url);
+      final documentDirectory = await getApplicationDocumentsDirectory();
+      photo = File(join(documentDirectory.path, 'imagetest.png'));
+      photo!.writeAsBytesSync(response.bodyBytes);
     }
 
     if (model.content != null) textController.text = model.content!;
@@ -56,7 +59,7 @@ class _CreateNewPostScreenState extends State<CreateNewPostScreen> {
 
   bool isLoading = false;
   File? photo;
-  void upload() async {
+  void upload(context) async {
     setState(() {
       isLoading = true;
     });
@@ -128,7 +131,7 @@ class _CreateNewPostScreenState extends State<CreateNewPostScreen> {
               ),
               actions: [
                 IconButton(
-                  onPressed: () => upload(),
+                  onPressed: () => upload(context),
                   icon: const Icon(Icons.check),
                 ),
               ],
