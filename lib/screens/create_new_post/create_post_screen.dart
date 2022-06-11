@@ -195,6 +195,7 @@ class _CreateNewPostScreenState extends State<CreateNewPostScreen> {
                             child: Padding(
                               padding: defaultPadding,
                               child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Icon(
                                     Icons.image,
