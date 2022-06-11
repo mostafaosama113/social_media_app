@@ -70,25 +70,44 @@ class _UpdatePictureScreenState extends State<UpdatePictureScreen> {
                     )
                   ],
                 ),
-                body: GridView.count(
-                  padding: defaultPadding,
-                  crossAxisCount: 3,
-                  crossAxisSpacing: 4.w,
-                  mainAxisSpacing: 8.w,
-                  children: [
-                    for (PictureModel picture in model.pictures)
-                      getPicFrame(
-                          picture: picture,
-                          onClick: () {
-                            setState(() {
-                              for (PictureModel temp in model.pictures) {
-                                temp.isSelected = false;
-                              }
-                              picture.isSelected = true;
-                            });
-                          })
-                  ],
-                ),
+                body: model.isLoading == false && model.pictures.isEmpty
+                    ? Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const SizedBox(width: double.infinity),
+                          Icon(
+                            Icons.camera_alt,
+                            color: MyColor.grey,
+                            size: 100.r,
+                          ),
+                          SizedBox(height: 10.h),
+                          Text(
+                            'No Images',
+                            style: logoTextStyle.copyWith(
+                              color: MyColor.grey,
+                            ),
+                          ),
+                        ],
+                      )
+                    : GridView.count(
+                        padding: defaultPadding,
+                        crossAxisCount: 3,
+                        crossAxisSpacing: 4.w,
+                        mainAxisSpacing: 8.w,
+                        children: [
+                          for (PictureModel picture in model.pictures)
+                            getPicFrame(
+                                picture: picture,
+                                onClick: () {
+                                  setState(() {
+                                    for (PictureModel temp in model.pictures) {
+                                      temp.isSelected = false;
+                                    }
+                                    picture.isSelected = true;
+                                  });
+                                })
+                        ],
+                      ),
                 floatingActionButton: FloatingActionButton(
                   onPressed: () => model.upload(),
                   backgroundColor: MyColor.blue,
