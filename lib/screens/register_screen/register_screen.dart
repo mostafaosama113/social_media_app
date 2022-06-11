@@ -125,6 +125,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   controller: pass,
                   inputType: TextInputType.text,
                   icon: Icons.lock,
+                  isPass: true,
                   maxLen: 20,
                 ),
                 InputField(
@@ -132,6 +133,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   controller: repass,
                   inputType: TextInputType.text,
                   icon: Icons.lock,
+                  isPass: true,
                   maxLen: 20,
                 ),
                 RoundButton(title: 'Register', onClick: () => register()),
