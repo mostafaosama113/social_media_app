@@ -221,31 +221,37 @@ class _CreateNewPostScreenState extends State<CreateNewPostScreen> {
                   } else if (keyboardOpen) {
                     return const SizedBox();
                   } else {
-                    return Padding(
-                      padding: defaultPadding,
-                      child: Stack(
-                        children: [
-                          Material(
-                            elevation: 3,
-                            borderRadius: BorderRadius.circular(3),
-                            clipBehavior: Clip.antiAliasWithSaveLayer,
-                            child: Image.file(photo!),
-                          ),
-                          Align(
-                            alignment: AlignmentDirectional.topEnd,
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: InkWell(
-                                  onTap: () {
-                                    setState(() {
-                                      photo = null;
-                                    });
-                                  },
-                                  child: const Icon(Icons.cancel,
-                                      color: Colors.black)),
+                    return Container(
+                      height: MediaQuery.of(context).size.height * .4,
+                      child: Padding(
+                        padding: defaultPadding,
+                        child: Stack(
+                          children: [
+                            Align(
+                              alignment: AlignmentDirectional.topEnd,
+                              child: Material(
+                                elevation: 3,
+                                borderRadius: BorderRadius.circular(3),
+                                clipBehavior: Clip.antiAliasWithSaveLayer,
+                                child: Image.file(photo!),
+                              ),
                             ),
-                          ),
-                        ],
+                            Align(
+                              alignment: AlignmentDirectional.topEnd,
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: InkWell(
+                                    onTap: () {
+                                      setState(() {
+                                        photo = null;
+                                      });
+                                    },
+                                    child: const Icon(Icons.cancel,
+                                        color: Colors.black)),
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     );
                   }
