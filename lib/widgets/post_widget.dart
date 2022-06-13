@@ -109,6 +109,52 @@ class _PostWidgetState extends State<PostWidget> {
     super.initState();
   }
 
+  void like() {
+    bool isLiked = widget.postModel.likes.contains(widget.homeManger.user.uid);
+    String uid = widget.homeManger.user.uid;
+    if (isLiked) {
+      setState(() {
+        widget.postModel.likes.remove(uid);
+      });
+      FirebaseFirestore.instance
+          .collection('posts')
+          .doc(widget.postModel.postId)
+          .collection('likes')
+          .doc(uid)
+          .delete()
+          .catchError((error) {
+        toast('Error');
+        setState(() {
+          widget.postModel.likes.add(uid);
+        });
+      });
+    } else {
+      setState(() {
+        widget.postModel.likes.add(uid);
+      });
+      FirebaseFirestore.instance
+          .collection('posts')
+          .doc(widget.postModel.postId)
+          .collection('likes')
+          .doc(uid)
+          .set({}).catchError((error) {
+        toast('Error');
+        setState(() {
+          widget.postModel.likes.remove(uid);
+        });
+      });
+    }
+    if (!widget.isActive) {
+      List<PostModel> posts = StaticManger.homeManger!.posts;
+      for (PostModel post in posts) {
+        if (post.postId == widget.postModel.postId) {
+          post = widget.postModel;
+        }
+      }
+      StaticManger.homeManger!.notifyListeners();
+    }
+  }
+
   final String myUid = FirebaseAuth.instance.currentUser!.uid;
   @override
   Widget build(BuildContext context) {
@@ -288,51 +334,7 @@ class _PostWidgetState extends State<PostWidget> {
                           : FontAwesomeIcons.heart,
                       title: 'Like',
                       color: isLiked ? MyColor.red : Colors.black,
-                      onClick: () {
-                        String uid = widget.homeManger.user.uid;
-                        if (isLiked) {
-                          setState(() {
-                            widget.postModel.likes.remove(uid);
-                          });
-                          FirebaseFirestore.instance
-                              .collection('posts')
-                              .doc(widget.postModel.postId)
-                              .collection('likes')
-                              .doc(uid)
-                              .delete()
-                              .catchError((error) {
-                            toast('Error');
-                            setState(() {
-                              widget.postModel.likes.add(uid);
-                            });
-                          });
-                        } else {
-                          setState(() {
-                            widget.postModel.likes.add(uid);
-                          });
-                          FirebaseFirestore.instance
-                              .collection('posts')
-                              .doc(widget.postModel.postId)
-                              .collection('likes')
-                              .doc(uid)
-                              .set({}).catchError((error) {
-                            toast('Error');
-                            setState(() {
-                              widget.postModel.likes.remove(uid);
-                            });
-                          });
-                        }
-                        if (!widget.isActive) {
-                          List<PostModel> posts =
-                              StaticManger.homeManger!.posts;
-                          for (PostModel post in posts) {
-                            if (post.postId == widget.postModel.postId) {
-                              post = widget.postModel;
-                            }
-                          }
-                          StaticManger.homeManger!.notifyListeners();
-                        }
-                      },
+                      onClick: () => like(),
                     ),
                     btn(
                       icon: FontAwesomeIcons.comment,
