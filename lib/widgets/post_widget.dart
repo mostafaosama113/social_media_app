@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:social_media_app/components/toast.dart';
 import 'package:social_media_app/models/post_model.dart';
+import 'package:social_media_app/screens/comment_screen/commet_screen.dart';
 import 'package:social_media_app/screens/create_new_post/create_post_screen.dart';
 import 'package:social_media_app/screens/home_screen/home_manger.dart';
 import 'package:social_media_app/screens/photo_viewer.dart';
@@ -320,14 +321,19 @@ class _PostWidgetState extends State<PostWidget> {
                   ),
                 ),
               if (widget.postModel.likes.isNotEmpty)
-                Padding(
-                  padding:
-                      const EdgeInsets.only(left: 15, right: 15, bottom: 5),
-                  child: Align(
-                    alignment: AlignmentDirectional.centerEnd,
-                    child: Text(
-                      '${widget.postModel.likes.length} like',
-                      style: defaultHintStyle,
+                InkWell(
+                  onTap: () {
+                    //todo : like list
+                  },
+                  child: Padding(
+                    padding:
+                        const EdgeInsets.only(left: 15, right: 15, bottom: 5),
+                    child: Align(
+                      alignment: AlignmentDirectional.centerEnd,
+                      child: Text(
+                        '${widget.postModel.likes.length} like',
+                        style: defaultHintStyle,
+                      ),
                     ),
                   ),
                 ),
@@ -353,7 +359,12 @@ class _PostWidgetState extends State<PostWidget> {
                       title: 'Comments',
                       color: Colors.black,
                       onClick: () {
-                        //todo : comment function
+                        showBottomSheet(
+                          backgroundColor: Colors.transparent,
+                          enableDrag: false,
+                          context: context,
+                          builder: (context) => CommentScreen(),
+                        );
                       },
                     ),
                   ],
