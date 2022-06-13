@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:social_media_app/models/comment_model.dart';
 import 'package:social_media_app/models/user_model.dart';
 
 class PostModel {
@@ -9,7 +10,7 @@ class PostModel {
   String? image;
   late String postId;
   List<String> likes = [];
-  List<String> comment = [];
+  List<CommentModel> comment = [];
 
   PostModel.fromJson(QueryDocumentSnapshot data) {
     postId = data.id;

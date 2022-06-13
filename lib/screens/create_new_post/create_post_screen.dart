@@ -110,8 +110,8 @@ class _CreateNewPostScreenState extends State<CreateNewPostScreen> {
   }
 
   void getPhoto() async {
-    final ImagePicker _picker = ImagePicker();
-    final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
+    final ImagePicker picker = ImagePicker();
+    final XFile? image = await picker.pickImage(source: ImageSource.gallery);
     if (image != null) {
       setState(() {
         photo = File(image.path);
