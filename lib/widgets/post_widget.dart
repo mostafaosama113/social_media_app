@@ -324,7 +324,7 @@ class _PostWidgetState extends State<PostWidget> {
                   padding:
                       const EdgeInsets.only(left: 15, right: 15, bottom: 5),
                   child: Align(
-                    alignment: AlignmentDirectional.centerStart,
+                    alignment: AlignmentDirectional.centerEnd,
                     child: Text(
                       '${widget.postModel.likes.length} like',
                       style: defaultHintStyle,
