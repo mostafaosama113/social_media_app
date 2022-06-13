@@ -29,7 +29,8 @@ class CreateNewPostScreen extends StatefulWidget {
 class _CreateNewPostScreenState extends State<CreateNewPostScreen> {
   final HomeManger homeManger = StaticManger.homeManger!;
   final TextEditingController textController = TextEditingController();
-
+  bool isLoading = false;
+  File? photo;
   @override
   void initState() {
     super.initState();
@@ -57,8 +58,6 @@ class _CreateNewPostScreenState extends State<CreateNewPostScreen> {
     });
   }
 
-  bool isLoading = false;
-  File? photo;
   void upload(context) async {
     setState(() {
       isLoading = true;

@@ -8,6 +8,7 @@ class PostModel {
   UserModel? userModel;
   String? image;
   late String postId;
+  List<String> likes = [];
 
   PostModel.fromJson(QueryDocumentSnapshot data) {
     postId = data.id;

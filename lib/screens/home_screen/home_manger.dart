@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:social_media_app/models/post_model.dart';
 import 'package:social_media_app/models/user_model.dart';
@@ -38,6 +39,16 @@ class HomeManger extends ChangeNotifier {
             .doc(model.userId)
             .get();
         model.userModel = UserModel.fromJson(snapshot);
+        QuerySnapshot likes = await FirebaseFirestore.instance
+            .collection('posts')
+            .doc(model.postId)
+            .collection('likes')
+            .get();
+        List<String> likesUid = [];
+        for (QueryDocumentSnapshot id in likes.docs) {
+          likesUid.add(id.id);
+        }
+        model.likes = likesUid;
         posts.add(model);
         if (postById[model.userId] == null) postById[model.userId] = [];
         postById[model.userId]!.add(model);

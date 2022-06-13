@@ -1,6 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:social_media_app/components/toast.dart';
 import 'package:social_media_app/models/post_model.dart';
 import 'package:social_media_app/screens/create_new_post/create_post_screen.dart';
 import 'package:social_media_app/screens/home_screen/home_manger.dart';
@@ -110,6 +112,7 @@ class _PostWidgetState extends State<PostWidget> {
   final String myUid = FirebaseAuth.instance.currentUser!.uid;
   @override
   Widget build(BuildContext context) {
+    bool isLiked = widget.postModel.likes.contains(widget.homeManger.user.uid);
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 9),
       child: Material(
@@ -280,12 +283,55 @@ class _PostWidgetState extends State<PostWidget> {
                 child: Row(
                   children: [
                     btn(
-                      icon: FontAwesomeIcons.solidHeart,
-                      // icon: FontAwesomeIcons.heart,
+                      icon: isLiked
+                          ? FontAwesomeIcons.solidHeart
+                          : FontAwesomeIcons.heart,
                       title: 'Like',
-                      color: MyColor.red,
+                      color: isLiked ? MyColor.red : Colors.black,
                       onClick: () {
-                        //todo : like function
+                        String uid = widget.homeManger.user.uid;
+                        if (isLiked) {
+                          setState(() {
+                            widget.postModel.likes.remove(uid);
+                          });
+                          FirebaseFirestore.instance
+                              .collection('posts')
+                              .doc(widget.postModel.postId)
+                              .collection('likes')
+                              .doc(uid)
+                              .delete()
+                              .catchError((error) {
+                            toast('Error');
+                            setState(() {
+                              widget.postModel.likes.add(uid);
+                            });
+                          });
+                        } else {
+                          setState(() {
+                            widget.postModel.likes.add(uid);
+                          });
+                          FirebaseFirestore.instance
+                              .collection('posts')
+                              .doc(widget.postModel.postId)
+                              .collection('likes')
+                              .doc(uid)
+                              .set({}).catchError((error) {
+                            toast('Error');
+                            setState(() {
+                              widget.postModel.likes.remove(uid);
+                            });
+                          });
+                        }
+                        if (!widget.isActive) {
+                          List<PostModel> posts =
+                              StaticManger.homeManger!.posts;
+                          for (PostModel post in posts) {
+                            if (post.postId == widget.postModel.postId) {
+                              post = widget.postModel;
+                            }
+                          }
+                          StaticManger.homeManger!.notifyListeners();
+                        }
                       },
                     ),
                     btn(
