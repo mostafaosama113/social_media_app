@@ -319,6 +319,18 @@ class _PostWidgetState extends State<PostWidget> {
                     ),
                   ),
                 ),
+              if (widget.postModel.likes.isNotEmpty)
+                Padding(
+                  padding:
+                      const EdgeInsets.only(left: 15, right: 15, bottom: 5),
+                  child: Align(
+                    alignment: AlignmentDirectional.centerStart,
+                    child: Text(
+                      '${widget.postModel.likes.length} like',
+                      style: defaultHintStyle,
+                    ),
+                  ),
+                ),
               Container(
                 color: Colors.grey,
                 height: 1,
