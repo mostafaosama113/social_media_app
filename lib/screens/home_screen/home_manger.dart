@@ -82,19 +82,20 @@ class HomeManger extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future updatePost(PostModel model, String uid, String date) async {
-    model.postId = uid;
-    model.date = date;
-    await FirebaseFirestore.instance.collection('posts').doc(uid).update(
+  Future updatePost(PostModel model) async {
+    await FirebaseFirestore.instance
+        .collection('posts')
+        .doc(model.postId)
+        .update(
           model.toJson(),
         );
     for (int i = 0; i < posts.length; i++) {
-      if (posts[i].postId == uid) {
+      if (posts[i].postId == model.postId) {
         posts[i] = model;
       }
     }
     for (int i = 0; i < postById[user.uid]!.length; i++) {
-      if (postById[user.uid]![i].postId == uid) {
+      if (postById[user.uid]![i].postId == model.postId) {
         postById[user.uid]![i] = model;
       }
     }
