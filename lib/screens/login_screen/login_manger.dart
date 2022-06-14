@@ -10,7 +10,6 @@ class LoginManger extends ChangeNotifier {
   bool isLoading = false;
 
   void login(context, {required String email, required String password}) {
-    isLoading = true;
     FocusManager.instance.primaryFocus?.unfocus();
     if (email.isEmpty) {
       toast(
@@ -24,6 +23,7 @@ class LoginManger extends ChangeNotifier {
       );
       return;
     }
+    isLoading = true;
     notifyListeners();
     FirebaseAuth.instance
         .signInWithEmailAndPassword(email: email, password: password)

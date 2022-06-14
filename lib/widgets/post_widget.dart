@@ -359,12 +359,22 @@ class _PostWidgetState extends State<PostWidget> {
                       title: 'Comments',
                       color: Colors.black,
                       onClick: () {
-                        showBottomSheet(
-                          backgroundColor: Colors.transparent,
-                          enableDrag: false,
-                          context: context,
-                          builder: (context) => CommentScreen(),
+                        Navigator.push(
+                          context,
+                          SlideRight(
+                            screen: CommentScreen(
+                              postModel: widget.postModel,
+                            ),
+                          ),
                         );
+                        // showBottomSheet(
+                        //   backgroundColor: Colors.transparent,
+                        //   enableDrag: false,
+                        //   context: context,
+                        //   builder: (context) => CommentScreen(
+                        //     postModel: widget.postModel,
+                        //   ),
+                        // );
                       },
                     ),
                   ],
