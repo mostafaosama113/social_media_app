@@ -1,9 +1,13 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:social_media_app/models/comment_model.dart';
 import 'package:social_media_app/models/post_model.dart';
+import 'package:social_media_app/models/user_model.dart';
 import 'package:social_media_app/shared/colors.dart';
 import 'package:social_media_app/shared/manger/text_style_manger.dart';
+import 'package:social_media_app/widgets/comment_bubble.dart';
 import 'package:social_media_app/widgets/loading_widget.dart';
 
 class CommentScreen extends StatefulWidget {
@@ -14,6 +18,40 @@ class CommentScreen extends StatefulWidget {
 }
 
 class _CommentScreenState extends State<CommentScreen> {
+  bool isLoading = false;
+  List<CommentModel> comments = [];
+
+  @override
+  void initState() {
+    super.initState();
+    getAllComments();
+  }
+
+  void getAllComments() async {
+    setState(() {
+      isLoading = true;
+    });
+    QuerySnapshot snapshot = await FirebaseFirestore.instance
+        .collection('posts')
+        .doc(widget.postModel.postId)
+        .collection('comments')
+        .orderBy('data')
+        .get();
+    List<QueryDocumentSnapshot<Object?>> list = snapshot.docs;
+    for (QueryDocumentSnapshot element in list) {
+      CommentModel model = CommentModel.fromJson(element);
+      DocumentSnapshot user = await FirebaseFirestore.instance
+          .collection('users')
+          .doc(model.userId)
+          .get();
+      model.user = UserModel.fromJson(user);
+      comments.add(model);
+    }
+    setState(() {
+      isLoading = false;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -32,13 +70,12 @@ class _CommentScreenState extends State<CommentScreen> {
             children: [
               Expanded(
                 child: ListView.builder(
-                  //todo : fetch Comments
                   reverse: true,
                   physics: const BouncingScrollPhysics(),
                   itemBuilder: (context, index) {
-                    return Container();
+                    return commentBubble(comments[index]);
                   },
-                  itemCount: 5,
+                  itemCount: comments.length,
                 ),
               ),
               Container(
@@ -89,7 +126,7 @@ class _CommentScreenState extends State<CommentScreen> {
             ],
           ),
         ),
-        if (false) loadingWidget(),
+        if (isLoading) loadingWidget(),
       ],
     );
   }

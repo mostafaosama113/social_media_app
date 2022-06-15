@@ -367,14 +367,6 @@ class _PostWidgetState extends State<PostWidget> {
                             ),
                           ),
                         );
-                        // showBottomSheet(
-                        //   backgroundColor: Colors.transparent,
-                        //   enableDrag: false,
-                        //   context: context,
-                        //   builder: (context) => CommentScreen(
-                        //     postModel: widget.postModel,
-                        //   ),
-                        // );
                       },
                     ),
                   ],
