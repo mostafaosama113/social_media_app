@@ -1,11 +1,8 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
-import 'package:social_media_app/models/comment_model.dart';
 import 'package:social_media_app/models/post_model.dart';
-import 'package:social_media_app/models/user_model.dart';
 import 'package:social_media_app/screens/comment_screen/comment_manger.dart';
 import 'package:social_media_app/shared/colors.dart';
 import 'package:social_media_app/shared/manger/text_style_manger.dart';
@@ -46,7 +43,13 @@ class _CommentScreenState extends State<CommentScreen> {
                         reverse: false,
                         physics: const BouncingScrollPhysics(),
                         itemBuilder: (context, index) {
-                          return commentBubble(model.comments[index]);
+                          return commentBubble(
+                              context: context,
+                              commentModel: model.comments[index],
+                              onClick: () => model.deleteComment(
+                                    commentModel: model.comments[index],
+                                    postModel: widget.postModel,
+                                  ));
                         },
                         itemCount: model.comments.length,
                       ),

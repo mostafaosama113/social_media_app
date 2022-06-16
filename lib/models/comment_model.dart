@@ -5,6 +5,7 @@ class CommentModel {
   late String userId;
   late String comment;
   late String data;
+  late String commentId;
   UserModel? user;
   CommentModel({
     required this.comment,
@@ -13,6 +14,7 @@ class CommentModel {
     this.user,
   });
   CommentModel.fromJson(QueryDocumentSnapshot snapshot) {
+    commentId = snapshot.id;
     Map<String, dynamic> json = snapshot.data() as Map<String, dynamic>;
     userId = json['user_id'];
     comment = json['comment'];

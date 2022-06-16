@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:social_media_app/components/toast.dart';
 import 'package:social_media_app/models/comment_model.dart';
 import 'package:social_media_app/models/post_model.dart';
 import 'package:social_media_app/models/user_model.dart';
@@ -30,13 +31,20 @@ class CommentManger extends ChangeNotifier {
       controller.clear();
       comments.add(commentModel);
       notifyListeners();
-      DocumentReference document = await FirebaseFirestore.instance
-          .collection('posts')
-          .doc(postModel.postId)
-          .collection('comments')
-          .add(
-            commentModel.toJson(),
-          );
+      try {
+        DocumentReference reference = await FirebaseFirestore.instance
+            .collection('posts')
+            .doc(postModel.postId)
+            .collection('comments')
+            .add(
+              commentModel.toJson(),
+            );
+        commentModel.commentId = reference.id;
+      } catch (error) {
+        toast('Error');
+        comments.remove(commentModel);
+        notifyListeners();
+      }
     }
   }
 
@@ -61,5 +69,26 @@ class CommentManger extends ChangeNotifier {
     }
     isLoading = false;
     notifyListeners();
+  }
+
+  void deleteComment(
+      {required CommentModel commentModel,
+      required PostModel postModel}) async {
+    int index = comments.indexOf(commentModel);
+    comments.remove(commentModel);
+    notifyListeners();
+    try {
+      await FirebaseFirestore.instance
+          .collection('posts')
+          .doc(postModel.postId)
+          .collection('comments')
+          .doc(commentModel.commentId)
+          .delete();
+    } catch (error) {
+      toast('Error');
+      comments.insert(index, commentModel);
+
+      notifyListeners();
+    }
   }
 }

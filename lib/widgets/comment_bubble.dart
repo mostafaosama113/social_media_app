@@ -1,15 +1,38 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:social_media_app/models/comment_model.dart';
 import 'package:social_media_app/shared/manger/padding_manger.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:social_media_app/shared/manger/text_style_manger.dart';
+import 'package:social_media_app/widgets/post_setting.dart';
 
-Widget commentBubble(CommentModel commentModel) {
+Widget commentBubble({
+  required context,
+  required CommentModel commentModel,
+  required Function onClick,
+}) {
+  String myUid = FirebaseAuth.instance.currentUser!.uid;
   return Padding(
     padding: defaultPadding,
     child: InkWell(
       onLongPress: () {
-        //todo : delete comment
+        if (myUid == commentModel.userId) {
+          showModalBottomSheet(
+              barrierColor: Colors.transparent,
+              backgroundColor: Colors.transparent,
+              elevation: 0,
+              context: context,
+              builder: (context) => Padding(
+                    padding: const EdgeInsets.only(bottom: 10),
+                    child: postSetting(
+                        icon: Icons.remove,
+                        title: 'Remove comment',
+                        onClick: () {
+                          onClick();
+                          Navigator.pop(context);
+                        }),
+                  ));
+        }
       },
       child: Row(
         children: [

@@ -12,56 +12,11 @@ import 'package:social_media_app/screens/profile_screen/profile_screen.dart';
 import 'package:social_media_app/shared/colors.dart';
 import 'package:social_media_app/shared/navigator.dart';
 import 'package:social_media_app/static_access/mangers.dart';
+import 'package:social_media_app/widgets/post_setting.dart';
 import 'package:timeago/timeago.dart' as timeago;
 import 'package:social_media_app/shared/manger/padding_manger.dart';
 import 'package:social_media_app/shared/manger/text_style_manger.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
-Widget postSetting({
-  required IconData icon,
-  required String title,
-  required Function onClick,
-}) {
-  return Padding(
-    padding: const EdgeInsets.only(
-      top: 5,
-      right: 15,
-      left: 15,
-    ),
-    child: InkWell(
-      onTap: () => onClick(),
-      child: Material(
-        borderRadius: BorderRadius.circular(5),
-        clipBehavior: Clip.antiAliasWithSaveLayer,
-        elevation: 5,
-        child: Container(
-          height: 60.h,
-          width: double.infinity,
-          color: Colors.white,
-          alignment: Alignment.center,
-          child: Padding(
-            padding: defaultPadding,
-            child: Row(
-              children: [
-                Icon(
-                  icon,
-                  color: MyColor.lightBlue,
-                ),
-                const SizedBox(width: 10),
-                Text(
-                  title,
-                  style: defaultButtonStyle.copyWith(
-                    color: MyColor.lightBlue,
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
-    ),
-  );
-}
 
 Widget btn({
   required IconData icon,
