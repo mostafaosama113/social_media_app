@@ -87,7 +87,6 @@ class CommentManger extends ChangeNotifier {
     } catch (error) {
       toast('Error');
       comments.insert(index, commentModel);
-
       notifyListeners();
     }
   }

@@ -29,7 +29,7 @@ Widget commentBubble({
                     padding: const EdgeInsets.only(bottom: 10),
                     child: postSetting(
                         icon: Icons.delete,
-                        title: 'Remove comment',
+                        title: 'Delete comment',
                         onClick: () {
                           onClick();
                           Navigator.pop(context);
@@ -38,6 +38,7 @@ Widget commentBubble({
         }
       },
       child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           CircleAvatar(
             radius: 22.r,

@@ -60,7 +60,7 @@ class _CommentScreenState extends State<CommentScreen> {
                       color: MyColor.blue,
                     ),
                     Container(
-                      height: 45,
+                      height: 45.h,
                       color: Colors.white,
                       child: Padding(
                         padding: EdgeInsets.symmetric(
@@ -70,6 +70,8 @@ class _CommentScreenState extends State<CommentScreen> {
                           children: [
                             Expanded(
                               child: TextFormField(
+                                maxLines: null,
+                                keyboardType: TextInputType.multiline,
                                 controller: commentController,
                                 decoration: const InputDecoration(
                                   hintText: 'Comment',
