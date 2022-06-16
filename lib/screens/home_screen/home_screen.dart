@@ -21,6 +21,7 @@ class HomeScreen extends StatelessWidget {
       create: (context) {
         HomeManger manger = HomeManger(userModel)..getPosts();
         StaticManger.homeManger = manger;
+        StaticManger.userModel = userModel;
         return manger;
       },
       builder: (context, child) => Consumer<HomeManger>(

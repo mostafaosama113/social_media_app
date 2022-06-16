@@ -10,11 +10,19 @@ class CommentModel {
     required this.comment,
     required this.userId,
     required this.data,
+    this.user,
   });
   CommentModel.fromJson(QueryDocumentSnapshot snapshot) {
     Map<String, dynamic> json = snapshot.data() as Map<String, dynamic>;
     userId = json['user_id'];
     comment = json['comment'];
     data = json['data'];
+  }
+  Map<String, dynamic> toJson() {
+    return {
+      'comment': comment,
+      'data': data,
+      'user_id': userId,
+    };
   }
 }

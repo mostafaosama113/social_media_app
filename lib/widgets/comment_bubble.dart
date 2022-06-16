@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:social_media_app/models/comment_model.dart';
-import 'package:social_media_app/shared/colors.dart';
 import 'package:social_media_app/shared/manger/padding_manger.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:social_media_app/shared/manger/text_style_manger.dart';
