@@ -16,6 +16,8 @@ Widget commentBubble({
   return Padding(
     padding: defaultPadding,
     child: InkWell(
+      splashColor: myUid == commentModel.userId ? null : Colors.transparent,
+      highlightColor: myUid == commentModel.userId ? null : Colors.transparent,
       onLongPress: () {
         if (myUid == commentModel.userId) {
           showModalBottomSheet(
