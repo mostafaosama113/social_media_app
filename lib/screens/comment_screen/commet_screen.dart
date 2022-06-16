@@ -40,7 +40,6 @@ class _CommentScreenState extends State<CommentScreen> {
                   children: [
                     Expanded(
                       child: ListView.builder(
-                        reverse: false,
                         physics: const BouncingScrollPhysics(),
                         itemBuilder: (context, index) {
                           return commentBubble(
@@ -60,13 +59,13 @@ class _CommentScreenState extends State<CommentScreen> {
                       color: MyColor.blue,
                     ),
                     Container(
-                      height: 45.h,
                       color: Colors.white,
                       child: Padding(
                         padding: EdgeInsets.symmetric(
                           horizontal: 5.w,
                         ),
                         child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             Expanded(
                               child: TextFormField(
@@ -78,11 +77,6 @@ class _CommentScreenState extends State<CommentScreen> {
                                   border: InputBorder.none,
                                 ),
                               ),
-                            ),
-                            Container(
-                              height: double.infinity,
-                              width: 1,
-                              color: MyColor.blue,
                             ),
                             InkWell(
                               onTap: () {
