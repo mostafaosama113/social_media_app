@@ -8,6 +8,7 @@ Widget postSetting({
   required IconData icon,
   required String title,
   required Function onClick,
+  double? size,
 }) {
   return Padding(
     padding: const EdgeInsets.only(
@@ -33,6 +34,7 @@ Widget postSetting({
                 Icon(
                   icon,
                   color: MyColor.lightBlue,
+                  size: size,
                 ),
                 const SizedBox(width: 10),
                 Text(
