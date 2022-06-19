@@ -78,7 +78,7 @@ class SettingScreen extends StatelessWidget {
             ),
             getInfoTail(
               title: 'Bio',
-              data: homeManger.user.bio ?? 'No bio added',
+              data: homeManger.user.bio ?? 'No bio',
               onClick: () {},
             ),
             getInfoTail(

@@ -2,9 +2,12 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:social_media_app/models/comment_model.dart';
+import 'package:social_media_app/screens/profile_screen/profile_screen.dart';
 import 'package:social_media_app/shared/manger/padding_manger.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:social_media_app/shared/manger/text_style_manger.dart';
+import 'package:social_media_app/shared/navigator.dart';
+import 'package:social_media_app/static_access/mangers.dart';
 import 'package:social_media_app/widgets/post_setting.dart';
 
 Widget commentBubble({
@@ -13,6 +16,17 @@ Widget commentBubble({
   required Function onClick,
 }) {
   String myUid = FirebaseAuth.instance.currentUser!.uid;
+  void navigateToProfile() => Navigator.push(
+        context,
+        SlideRight(
+          screen: ProfileScreen(
+            user: commentModel.user!,
+            postModel:
+                StaticManger.homeManger!.postById[commentModel.user!.uid]!,
+          ),
+        ),
+      );
+
   return Padding(
     padding: defaultPadding,
     child: InkWell(
@@ -40,9 +54,12 @@ Widget commentBubble({
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          CircleAvatar(
-            radius: 22.r,
-            backgroundImage: NetworkImage(commentModel.user!.image),
+          InkWell(
+            onTap: () => navigateToProfile(),
+            child: CircleAvatar(
+              radius: 22.r,
+              backgroundImage: NetworkImage(commentModel.user!.image),
+            ),
           ),
           SizedBox(
             width: 20.w,
@@ -51,16 +68,33 @@ Widget commentBubble({
             child: Material(
               color: Colors.grey[300],
               elevation: 1,
-              borderRadius: const BorderRadiusDirectional.only(
-                topEnd: Radius.circular(10),
-                bottomEnd: Radius.circular(10),
-                bottomStart: Radius.circular(10),
+              borderRadius: const BorderRadiusDirectional.all(
+                Radius.circular(10),
               ),
               child: Padding(
                 padding: EdgeInsets.symmetric(vertical: 10.h, horizontal: 8.w),
-                child: Text(
-                  commentModel.comment,
-                  style: defaultTextStyle.copyWith(fontSize: 15.sp),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    InkWell(
+                      onTap: () => navigateToProfile(),
+                      child: Text(
+                        commentModel.user!.name,
+                        style: defaultTextStyle.copyWith(
+                          fontSize: 15.sp,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 5),
+                    Text(
+                      commentModel.comment,
+                      style: defaultTextStyle.copyWith(
+                        fontSize: 15.sp,
+                        fontWeight: FontWeight.normal,
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ),

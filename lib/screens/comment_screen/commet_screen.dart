@@ -73,7 +73,7 @@ class _CommentScreenState extends State<CommentScreen> {
                                 keyboardType: TextInputType.multiline,
                                 controller: commentController,
                                 decoration: const InputDecoration(
-                                  hintText: 'Comment',
+                                  hintText: 'Comment ...',
                                   border: InputBorder.none,
                                 ),
                               ),
