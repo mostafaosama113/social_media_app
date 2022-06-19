@@ -7,6 +7,7 @@ import 'package:social_media_app/models/post_model.dart';
 import 'package:social_media_app/screens/comment_screen/commet_screen.dart';
 import 'package:social_media_app/screens/create_new_post/create_post_screen.dart';
 import 'package:social_media_app/screens/home_screen/home_manger.dart';
+import 'package:social_media_app/screens/like_list_screen.dart';
 import 'package:social_media_app/screens/photo_viewer.dart';
 import 'package:social_media_app/screens/profile_screen/profile_screen.dart';
 import 'package:social_media_app/shared/colors.dart';
@@ -277,9 +278,12 @@ class _PostWidgetState extends State<PostWidget> {
                 ),
               if (widget.postModel.likes.isNotEmpty)
                 InkWell(
-                  onTap: () {
-                    //todo : like list
-                  },
+                  onTap: () => Navigator.push(
+                    context,
+                    SlideRight(
+                      screen: LikeListScreen(widget.postModel.likes),
+                    ),
+                  ),
                   child: Padding(
                     padding:
                         const EdgeInsets.only(left: 15, right: 15, bottom: 5),
