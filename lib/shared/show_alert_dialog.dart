@@ -72,7 +72,7 @@ void updatePersonalData(
                     ),
                     TextField(
                       controller: controller,
-                      maxLength: 30,
+                      maxLength: 50,
                       style: defaultHintStyle.copyWith(
                         color: Colors.black,
                       ),
@@ -101,7 +101,11 @@ void updatePersonalData(
                     return;
                   }
                   if (controller.text != oldData) {
-                    //todo : update data
+                    if (type == UpdateType.name) {
+                      settingManger.updateName(controller.text);
+                    } else {
+                      settingManger.updateBio(controller.text);
+                    }
                   }
                   Navigator.pop(context);
                 },

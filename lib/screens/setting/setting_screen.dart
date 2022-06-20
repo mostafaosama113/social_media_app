@@ -106,7 +106,10 @@ class _SettingScreenState extends State<SettingScreen> {
                       ),
                       getInfoTail(
                         title: 'Bio',
-                        data: homeManger.user.bio ?? 'No bio',
+                        data: (homeManger.user.bio == null ||
+                                homeManger.user.bio!.isEmpty)
+                            ? 'No bio'
+                            : homeManger.user.bio!,
                         onClick: () {
                           updatePersonalData(context, type: UpdateType.bio);
                         },

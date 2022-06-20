@@ -187,7 +187,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
               ),
             ),
           ),
-          if (gloableModel.userModel.bio != null)
+          if (gloableModel.userModel.bio != null &&
+              gloableModel.userModel.bio!.isNotEmpty)
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 15),
               child: Align(
