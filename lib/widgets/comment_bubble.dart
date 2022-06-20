@@ -1,6 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:social_media_app/models/comment_model.dart';
 import 'package:social_media_app/screens/profile_screen/profile_screen.dart';
 import 'package:social_media_app/shared/manger/padding_manger.dart';
@@ -54,11 +53,14 @@ Widget commentBubble({
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          InkWell(
-            onTap: () => navigateToProfile(),
-            child: CircleAvatar(
-              radius: 22.r,
-              backgroundImage: NetworkImage(commentModel.user!.image),
+          Padding(
+            padding: const EdgeInsets.only(top: 6.0),
+            child: InkWell(
+              onTap: () => navigateToProfile(),
+              child: CircleAvatar(
+                radius: 22.r,
+                backgroundImage: NetworkImage(commentModel.user!.image),
+              ),
             ),
           ),
           SizedBox(
