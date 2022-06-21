@@ -57,6 +57,8 @@ Widget commentBubble({
             padding: const EdgeInsets.only(top: 6.0),
             child: InkWell(
               onTap: () => navigateToProfile(),
+              splashColor: Colors.transparent,
+              highlightColor: Colors.transparent,
               child: CircleAvatar(
                 radius: 22.r,
                 backgroundImage: NetworkImage(commentModel.user!.image),
@@ -80,6 +82,8 @@ Widget commentBubble({
                   children: [
                     InkWell(
                       onTap: () => navigateToProfile(),
+                      splashColor: Colors.transparent,
+                      highlightColor: Colors.transparent,
                       child: Text(
                         commentModel.user!.name,
                         style: defaultTextStyle.copyWith(

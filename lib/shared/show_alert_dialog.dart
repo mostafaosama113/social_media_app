@@ -233,6 +233,7 @@ void updatePassword(context) {
               padding: const EdgeInsetsDirectional.only(end: 5.0),
               child: InkWell(
                 onTap: () async {
+                  FocusManager.instance.primaryFocus?.unfocus();
                   if (oldPass.text.isEmpty ||
                       newPass.text.isEmpty ||
                       confirmNewPass.text.isEmpty) {

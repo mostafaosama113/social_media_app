@@ -19,6 +19,7 @@ class CommentManger extends ChangeNotifier {
   void addNewComment(TextEditingController controller) async {
     String comment = controller.text;
     if (comment.isNotEmpty) {
+      FocusManager.instance.primaryFocus!.unfocus();
       String date = await getCurrentTime();
       String uid = FirebaseAuth.instance.currentUser!.uid;
       UserModel user = StaticManger.userModel!;
