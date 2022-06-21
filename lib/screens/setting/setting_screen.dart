@@ -100,9 +100,8 @@ class _SettingScreenState extends State<SettingScreen> {
                       getInfoTail(
                         title: 'Name',
                         data: homeManger.user.name,
-                        onClick: () {
-                          updatePersonalData(context, type: UpdateType.name);
-                        },
+                        onClick: () =>
+                            updatePersonalData(context, type: UpdateType.name),
                       ),
                       getInfoTail(
                         title: 'Bio',
@@ -110,14 +109,13 @@ class _SettingScreenState extends State<SettingScreen> {
                                 homeManger.user.bio!.isEmpty)
                             ? 'No bio'
                             : homeManger.user.bio!,
-                        onClick: () {
-                          updatePersonalData(context, type: UpdateType.bio);
-                        },
+                        onClick: () =>
+                            updatePersonalData(context, type: UpdateType.bio),
                       ),
                       getInfoTail(
                         title: 'Password',
                         data: 'Update your password',
-                        onClick: () {},
+                        onClick: () => updatePassword(context),
                       ),
                     ],
                   ),

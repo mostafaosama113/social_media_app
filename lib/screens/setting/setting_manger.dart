@@ -34,4 +34,12 @@ class SettingManger extends ChangeNotifier {
     _homeManger.notifyListeners();
     notifyListeners();
   }
+
+  void updatePassword(String pass) async {
+    isLoading = true;
+    notifyListeners();
+    await FirebaseAuth.instance.currentUser!.updatePassword(pass);
+    isLoading = false;
+    notifyListeners();
+  }
 }
