@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:social_media_app/models/post_model.dart';
 import 'package:social_media_app/screens/home_screen/home_manger.dart';
 import 'package:social_media_app/static_access/mangers.dart';
 
@@ -16,6 +17,14 @@ class SettingManger extends ChangeNotifier {
       {'name': name},
     );
     _homeManger.user.name = name;
+    for (PostModel model in _homeManger.posts) {
+      if (model.userId == uid) {
+        model.userModel!.name = name;
+      }
+    }
+    for (PostModel model in _homeManger.postById[uid]!) {
+      model.userModel!.name = name;
+    }
     isLoading = false;
     _homeManger.notifyListeners();
     notifyListeners();
@@ -31,7 +40,6 @@ class SettingManger extends ChangeNotifier {
     );
     _homeManger.user.bio = bio;
     isLoading = false;
-    _homeManger.notifyListeners();
     notifyListeners();
   }
 

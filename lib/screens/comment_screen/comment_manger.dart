@@ -29,7 +29,7 @@ class CommentManger extends ChangeNotifier {
         user: user,
       );
       controller.clear();
-      comments.add(commentModel);
+      comments.insert(0, commentModel);
       notifyListeners();
       try {
         DocumentReference reference = await FirebaseFirestore.instance
@@ -55,7 +55,7 @@ class CommentManger extends ChangeNotifier {
         .collection('posts')
         .doc(postModel.postId)
         .collection('comments')
-        .orderBy('data')
+        .orderBy('data', descending: true)
         .get();
     List<QueryDocumentSnapshot<Object?>> list = snapshot.docs;
     for (QueryDocumentSnapshot element in list) {
