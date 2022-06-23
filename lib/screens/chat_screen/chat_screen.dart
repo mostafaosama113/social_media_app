@@ -5,8 +5,10 @@ import 'package:provider/provider.dart';
 import 'package:social_media_app/models/user_model.dart';
 import 'package:social_media_app/screens/chat_screen/chat_manger.dart';
 import 'package:social_media_app/shared/colors.dart';
+import 'package:social_media_app/shared/manger/text_style_manger.dart';
 import 'package:social_media_app/static_access/mangers.dart';
 import 'package:social_media_app/widgets/send_widget.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ChatScreen extends StatefulWidget {
   const ChatScreen(this.userModel, {Key? key}) : super(key: key);
@@ -35,7 +37,26 @@ class _ChatScreenState extends State<ChatScreen> {
       builder: (context, child) => Consumer<ChatManger>(
         builder: (context, model, child) {
           return Scaffold(
-            appBar: AppBar(),
+            appBar: AppBar(
+              titleSpacing: 0,
+              title: Row(
+                children: [
+                  CircleAvatar(
+                    backgroundImage: NetworkImage(widget.userModel.image),
+                  ),
+                  SizedBox(
+                    width: 10.w,
+                  ),
+                  Text(
+                    widget.userModel.name,
+                    style: defaultTextStyle.copyWith(
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black,
+                    ),
+                  ),
+                ],
+              ),
+            ),
             body: Column(
               children: [
                 Expanded(
