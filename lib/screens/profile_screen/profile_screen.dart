@@ -1,10 +1,12 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:social_media_app/models/post_model.dart';
 import 'package:social_media_app/models/user_model.dart';
+import 'package:social_media_app/screens/chat_screen/chat_screen.dart';
 import 'package:social_media_app/screens/home_screen/home_manger.dart';
 import 'package:social_media_app/screens/photo_viewer.dart';
 import 'package:social_media_app/screens/profile_screen/profile_manger.dart';
@@ -69,6 +71,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   Widget getHeader(context) {
+    String myUid = FirebaseAuth.instance.currentUser!.uid;
     return Material(
       elevation: 1,
       clipBehavior: Clip.antiAliasWithSaveLayer,
@@ -181,26 +184,56 @@ class _ProfileScreenState extends State<ProfileScreen> {
             padding: defaultPadding,
             child: Align(
               alignment: AlignmentDirectional.bottomStart,
-              child: Text(
-                gloableModel.userModel.name,
-                style: defaultNameStyle,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        gloableModel.userModel.name,
+                        style: defaultNameStyle,
+                      ),
+                      if (gloableModel.userModel.bio != null &&
+                          gloableModel.userModel.bio!.isNotEmpty)
+                        const SizedBox(height: 10),
+                      if (gloableModel.userModel.bio != null &&
+                          gloableModel.userModel.bio!.isNotEmpty)
+                        Align(
+                          alignment: AlignmentDirectional.bottomStart,
+                          child: Text(
+                            gloableModel.userModel.bio!,
+                            style: defaultHintStyle,
+                          ),
+                        ),
+                    ],
+                  ),
+                  if (myUid != widget.user.uid)
+                    Align(
+                      alignment: AlignmentDirectional.topEnd,
+                      child: InkWell(
+                        splashColor: Colors.transparent,
+                        highlightColor: Colors.transparent,
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            SlideRight(
+                              screen: ChatScreen(widget.user),
+                            ),
+                          );
+                        },
+                        child: Icon(
+                          FontAwesomeIcons.facebookMessenger,
+                          color: MyColor.lightBlue,
+                        ),
+                      ),
+                    ),
+                ],
               ),
             ),
           ),
-          if (gloableModel.userModel.bio != null &&
-              gloableModel.userModel.bio!.isNotEmpty)
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 15),
-              child: Align(
-                alignment: AlignmentDirectional.bottomStart,
-                child: Text(
-                  gloableModel.userModel.bio!,
-                  style: defaultHintStyle,
-                ),
-              ),
-            ),
           Padding(
-            padding: const EdgeInsets.only(top: 20),
+            padding: const EdgeInsets.only(top: 5),
             child: Container(
               color: Colors.grey,
               height: 1,

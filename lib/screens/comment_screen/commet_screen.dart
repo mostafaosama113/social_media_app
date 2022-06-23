@@ -8,6 +8,7 @@ import 'package:social_media_app/shared/colors.dart';
 import 'package:social_media_app/shared/manger/text_style_manger.dart';
 import 'package:social_media_app/widgets/comment_bubble.dart';
 import 'package:social_media_app/widgets/loading_widget.dart';
+import 'package:social_media_app/widgets/send_widget.dart';
 
 class CommentScreen extends StatefulWidget {
   const CommentScreen({Key? key, required this.postModel}) : super(key: key);
@@ -58,44 +59,12 @@ class _CommentScreenState extends State<CommentScreen> {
                       width: double.infinity,
                       color: MyColor.blue,
                     ),
-                    Container(
-                      color: Colors.white,
-                      child: Padding(
-                        padding: EdgeInsets.symmetric(
-                          horizontal: 5.w,
-                        ),
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Expanded(
-                              child: TextFormField(
-                                maxLines: null,
-                                keyboardType: TextInputType.multiline,
-                                controller: commentController,
-                                decoration: const InputDecoration(
-                                  hintText: 'Comment ...',
-                                  border: InputBorder.none,
-                                ),
-                              ),
-                            ),
-                            InkWell(
-                              onTap: () {
-                                model.addNewComment(commentController);
-                              },
-                              child: Padding(
-                                padding: EdgeInsets.symmetric(
-                                  horizontal: 15.w,
-                                ),
-                                child: Icon(
-                                  FontAwesomeIcons.paperPlane,
-                                  color: MyColor.blue,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    )
+                    sendWidget(
+                        controller: commentController,
+                        hint: 'Comment ...',
+                        onClick: () {
+                          model.addNewComment(commentController);
+                        }),
                   ],
                 ),
               ),
