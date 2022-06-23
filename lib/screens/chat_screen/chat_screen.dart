@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:social_media_app/models/user_model.dart';
 import 'package:social_media_app/screens/chat_screen/chat_manger.dart';
 import 'package:social_media_app/shared/colors.dart';
+import 'package:social_media_app/static_access/mangers.dart';
 import 'package:social_media_app/widgets/send_widget.dart';
 
 class ChatScreen extends StatefulWidget {
@@ -18,11 +19,18 @@ class _ChatScreenState extends State<ChatScreen> {
   String myUid = FirebaseAuth.instance.currentUser!.uid;
   TextEditingController controller = TextEditingController();
   @override
+  void dispose() {
+    super.dispose();
+    StaticManger.chatManger!.subscription.cancel();
+  }
+
+  @override
   Widget build(BuildContext context) {
     String myUid = FirebaseAuth.instance.currentUser!.uid;
     return ChangeNotifierProvider(
       create: (context) {
-        return ChatManger(widget.userModel);
+        StaticManger.chatManger = ChatManger(widget.userModel);
+        return StaticManger.chatManger;
       },
       builder: (context, child) => Consumer<ChatManger>(
         builder: (context, model, child) {

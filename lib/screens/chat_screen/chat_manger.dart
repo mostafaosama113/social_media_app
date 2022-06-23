@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
@@ -11,11 +13,12 @@ class ChatManger extends ChangeNotifier {
   UserModel receiver;
   String myUid = FirebaseAuth.instance.currentUser!.uid;
   late String messengerCode = getMessengerCode(myUid, receiver.uid);
+  late StreamSubscription subscription;
   ChatManger(this.receiver) {
     openStream();
   }
   void openStream() {
-    FirebaseFirestore.instance
+    subscription = FirebaseFirestore.instance
         .collection('messenger')
         .doc(messengerCode)
         .collection('massages')
