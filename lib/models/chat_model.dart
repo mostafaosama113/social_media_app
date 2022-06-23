@@ -5,9 +5,11 @@ class ChatModel {
   late String from;
   late String to;
   late String massage;
+  late String id;
   bool sent = true;
 
   ChatModel.fromJson(QueryDocumentSnapshot snapshot) {
+    id = snapshot.id;
     Map<String, dynamic> json = snapshot.data() as Map<String, dynamic>;
     date = json['date'];
     from = json['from'];

@@ -7,6 +7,7 @@ import 'package:social_media_app/screens/chat_screen/chat_manger.dart';
 import 'package:social_media_app/shared/colors.dart';
 import 'package:social_media_app/shared/manger/text_style_manger.dart';
 import 'package:social_media_app/static_access/mangers.dart';
+import 'package:social_media_app/widgets/post_setting.dart';
 import 'package:social_media_app/widgets/send_widget.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -66,16 +67,41 @@ class _ChatScreenState extends State<ChatScreen> {
                     reverse: true,
                     padding: const EdgeInsets.only(bottom: 8),
                     itemBuilder: (context, index) {
-                      return BubbleSpecialThree(
-                        text: model.chats[index].massage,
-                        tail: true,
-                        sent: widget.userModel.uid != model.chats[index].from &&
-                            model.chats[index].sent,
-                        isSender:
-                            widget.userModel.uid != model.chats[index].from,
-                        color: widget.userModel.uid != model.chats[index].from
-                            ? MyColor.lightBlue
-                            : MyColor.grey,
+                      return InkWell(
+                        onLongPress: () {
+                          if (myUid == model.chats[index].from) {
+                            showModalBottomSheet(
+                              backgroundColor: Colors.transparent,
+                              barrierColor: Colors.transparent,
+                              context: context,
+                              builder: (context) => Padding(
+                                padding: const EdgeInsets.only(bottom: 10),
+                                child: postSetting(
+                                  icon: Icons.delete,
+                                  title: 'Delete message',
+                                  onClick: () {
+                                    Navigator.pop(context);
+                                    model.deleteMessage(model.chats[index]);
+                                  },
+                                ),
+                              ),
+                            );
+                          }
+                        },
+                        splashColor: Colors.transparent,
+                        highlightColor: Colors.transparent,
+                        child: BubbleSpecialThree(
+                          text: model.chats[index].massage,
+                          tail: true,
+                          sent:
+                              widget.userModel.uid != model.chats[index].from &&
+                                  model.chats[index].sent,
+                          isSender:
+                              widget.userModel.uid != model.chats[index].from,
+                          color: widget.userModel.uid != model.chats[index].from
+                              ? MyColor.lightBlue
+                              : MyColor.grey,
+                        ),
                       );
                     },
                     itemCount: model.chats.length,

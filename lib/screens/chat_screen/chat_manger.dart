@@ -55,4 +55,13 @@ class ChatManger extends ChangeNotifier {
           .add(model.getJson());
     }
   }
+
+  void deleteMessage(ChatModel chat) async {
+    await FirebaseFirestore.instance
+        .collection('messenger')
+        .doc(messengerCode)
+        .collection('massages')
+        .doc(chat.id)
+        .delete();
+  }
 }
