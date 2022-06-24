@@ -86,6 +86,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
             child: Stack(
               children: [
                 InkWell(
+                  splashColor: Colors.transparent,
+                  highlightColor: Colors.transparent,
                   onTap: () {
                     Navigator.push(
                       context,
@@ -134,6 +136,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               child: Align(
                                 alignment: Alignment.center,
                                 child: InkWell(
+                                  splashColor: Colors.transparent,
+                                  highlightColor: Colors.transparent,
                                   onTap: () {
                                     Navigator.push(
                                       context,

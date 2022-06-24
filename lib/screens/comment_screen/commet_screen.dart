@@ -44,12 +44,14 @@ class _CommentScreenState extends State<CommentScreen> {
                         physics: const BouncingScrollPhysics(),
                         itemBuilder: (context, index) {
                           return commentBubble(
-                              context: context,
+                            context: context,
+                            postModel: widget.postModel,
+                            commentModel: model.comments[index],
+                            onClick: () => model.deleteComment(
                               commentModel: model.comments[index],
-                              onClick: () => model.deleteComment(
-                                    commentModel: model.comments[index],
-                                    postModel: widget.postModel,
-                                  ));
+                              postModel: widget.postModel,
+                            ),
+                          );
                         },
                         itemCount: model.comments.length,
                       ),

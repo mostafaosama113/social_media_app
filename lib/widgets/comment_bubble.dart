@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:social_media_app/models/comment_model.dart';
+import 'package:social_media_app/models/post_model.dart';
 import 'package:social_media_app/screens/profile_screen/profile_screen.dart';
 import 'package:social_media_app/shared/manger/padding_manger.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -12,6 +13,7 @@ import 'package:social_media_app/widgets/post_setting.dart';
 Widget commentBubble({
   required context,
   required CommentModel commentModel,
+  required PostModel postModel,
   required Function onClick,
 }) {
   String myUid = FirebaseAuth.instance.currentUser!.uid;
@@ -32,7 +34,7 @@ Widget commentBubble({
       splashColor: myUid == commentModel.userId ? null : Colors.transparent,
       highlightColor: myUid == commentModel.userId ? null : Colors.transparent,
       onLongPress: () {
-        if (myUid == commentModel.userId) {
+        if (myUid == commentModel.userId /*|| postModel.userId == myUid*/) {
           showModalBottomSheet(
               barrierColor: Colors.transparent,
               backgroundColor: Colors.transparent,
