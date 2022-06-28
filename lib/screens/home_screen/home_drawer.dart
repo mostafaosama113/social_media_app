@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:social_media_app/models/user_model.dart';
 import 'package:social_media_app/screens/home_screen/home_manger.dart';
+import 'package:social_media_app/screens/messanger_screen/messanger_screen.dart';
 import 'package:social_media_app/screens/profile_screen/profile_screen.dart';
 import 'package:social_media_app/screens/setting/setting_screen.dart';
 import 'package:social_media_app/shared/navigator.dart';
@@ -58,7 +59,12 @@ Widget homeDrawer(
               context: context,
               title: 'messanger',
               icon: FontAwesomeIcons.facebookMessenger,
-              onClick: () {},
+              onClick: () => Navigator.push(
+                context,
+                SlideRight(
+                  screen: const MessangerScreen(),
+                ),
+              ),
             ),
             btnBar(
               context: context,

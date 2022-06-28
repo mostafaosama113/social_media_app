@@ -49,7 +49,7 @@ Widget commentBubble({
                           onClick();
                           Navigator.pop(context);
                         }),
-                  ));
+                  ),);
         }
       },
       child: Row(

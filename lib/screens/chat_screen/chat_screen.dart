@@ -1,3 +1,4 @@
+import 'package:chat_bubbles/bubbles/bubble_normal_audio.dart';
 import 'package:chat_bubbles/bubbles/bubble_special_three.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -10,6 +11,7 @@ import 'package:social_media_app/static_access/mangers.dart';
 import 'package:social_media_app/widgets/post_setting.dart';
 import 'package:social_media_app/widgets/send_widget.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:social_media_app/widgets/user_tile.dart';
 
 class ChatScreen extends StatefulWidget {
   const ChatScreen(this.userModel, {Key? key}) : super(key: key);
@@ -40,23 +42,7 @@ class _ChatScreenState extends State<ChatScreen> {
           return Scaffold(
             appBar: AppBar(
               titleSpacing: 0,
-              title: Row(
-                children: [
-                  CircleAvatar(
-                    backgroundImage: NetworkImage(widget.userModel.image),
-                  ),
-                  SizedBox(
-                    width: 10.w,
-                  ),
-                  Text(
-                    widget.userModel.name,
-                    style: defaultTextStyle.copyWith(
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black,
-                    ),
-                  ),
-                ],
-              ),
+              title: userTile(widget.userModel),
             ),
             body: Column(
               children: [
