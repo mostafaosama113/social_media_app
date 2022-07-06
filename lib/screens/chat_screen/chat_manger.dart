@@ -7,6 +7,7 @@ import 'package:social_media_app/models/chat_model.dart';
 import 'package:social_media_app/models/user_model.dart';
 import 'package:social_media_app/shared/get_current_time.dart';
 import 'package:social_media_app/shared/get_messenger_code.dart';
+import 'package:social_media_app/static_access/mangers.dart';
 
 class ChatManger extends ChangeNotifier {
   bool isTyping = false;
@@ -24,6 +25,7 @@ class ChatManger extends ChangeNotifier {
   void closeAllStream() async {
     await subscription.cancel();
     await isTypingSubscription.cancel();
+    StaticManger.chatManger = null;
   }
 
   void isTypingStream() {
@@ -68,17 +70,18 @@ class ChatManger extends ChangeNotifier {
   void sendMessage(TextEditingController controller) async {
     if (controller.text.isNotEmpty) {
       ChatModel model = ChatModel(
-          date: '',
-          from: myUid,
-          to: receiver.uid,
-          massage: controller.text,
-          sent: false);
+        date: '',
+        from: myUid,
+        to: receiver.uid,
+        massage: controller.text,
+        sent: false,
+      );
       chats.insert(0, model);
       controller.clear();
       notifyListeners();
       String date = await getCurrentTime();
       model.date = date;
-      DocumentReference reference = await FirebaseFirestore.instance
+      await FirebaseFirestore.instance
           .collection('messenger')
           .doc(messengerCode)
           .collection('massages')
