@@ -1,5 +1,6 @@
 class StringManger {
   static const appTitle = "Facebook";
+  static const messanger = "Messanger";
   static const defaultProfileImage =
       'https://firebasestorage.googleapis.com/v0/b/socialmediaapp-c4b09.appspot.com/o/img_avatar.png?alt=media&token=1c99582a-e627-4403-ad81-e83ed5567632';
   static const defaultProfileCover =

@@ -4,7 +4,10 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:social_media_app/shared/colors.dart';
 
 Widget sendWidget(
-    {required controller, required Function onClick, required String hint}) {
+    {required controller,
+    required Function onClick,
+    required String hint,
+    Function? onChange}) {
   return Container(
     color: Colors.white,
     child: Padding(
@@ -16,6 +19,7 @@ Widget sendWidget(
         children: [
           Expanded(
             child: TextFormField(
+              onChanged: onChange == null ? null : (string) => onChange(),
               maxLines: null,
               keyboardType: TextInputType.multiline,
               controller: controller,

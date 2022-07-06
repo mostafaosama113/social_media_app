@@ -10,7 +10,6 @@ import 'package:social_media_app/shared/manger/text_style_manger.dart';
 import 'package:social_media_app/static_access/mangers.dart';
 import 'package:social_media_app/widgets/post_setting.dart';
 import 'package:social_media_app/widgets/send_widget.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:social_media_app/widgets/user_tile.dart';
 
 class ChatScreen extends StatefulWidget {
@@ -26,7 +25,7 @@ class _ChatScreenState extends State<ChatScreen> {
   @override
   void dispose() {
     super.dispose();
-    StaticManger.chatManger!.subscription.cancel();
+    StaticManger.chatManger!.closeAllStream();
   }
 
   @override
@@ -42,7 +41,10 @@ class _ChatScreenState extends State<ChatScreen> {
           return Scaffold(
             appBar: AppBar(
               titleSpacing: 0,
-              title: userTile(widget.userModel),
+              title: userTile(
+                widget.userModel,
+                isTyping: model.isTyping,
+              ),
             ),
             body: Column(
               children: [
@@ -98,11 +100,13 @@ class _ChatScreenState extends State<ChatScreen> {
                   color: MyColor.blue,
                 ),
                 sendWidget(
-                    controller: controller,
-                    onClick: () {
-                      model.sendMessage(controller);
-                    },
-                    hint: 'Aa')
+                  controller: controller,
+                  onClick: () {
+                    model.sendMessage(controller);
+                  },
+                  onChange: () => model.typing(),
+                  hint: 'Aa',
+                )
               ],
             ),
           );

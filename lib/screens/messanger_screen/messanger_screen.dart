@@ -40,7 +40,7 @@ class _MessangerScreenState extends State<MessangerScreen> {
                 appBar: AppBar(
                   titleSpacing: 0,
                   title: Text(
-                    StringManger.appTitle,
+                    StringManger.messanger,
                     style: logoTextStyle,
                   ),
                 ),
