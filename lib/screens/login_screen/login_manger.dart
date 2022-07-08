@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:social_media_app/models/user_model.dart';
 import 'package:social_media_app/screens/home_screen/home_screen.dart';
@@ -34,6 +35,7 @@ class LoginManger extends ChangeNotifier {
           .get()
           .then((value) {
         UserModel userModel = UserModel.fromJson(value);
+        FirebaseMessaging.instance.subscribeToTopic(userModel.uid);
         isLoading = false;
         notifyListeners();
         Navigator.pushReplacement(

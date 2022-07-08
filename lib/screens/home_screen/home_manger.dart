@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:social_media_app/models/post_model.dart';
 import 'package:social_media_app/models/user_model.dart';
@@ -57,16 +58,14 @@ class HomeManger extends ChangeNotifier {
     });
   }
 
-  void signOut(context) {
+  void signOut(context) async {
     isLoading = true;
     notifyListeners();
-    FirebaseAuth.instance.signOut().then(
-      (value) {
-        isLoading = false;
-        notifyListeners();
-        Navigator.pushReplacement(context, SlideRight(screen: LoginScreen()));
-      },
-    );
+    FirebaseMessaging.instance.unsubscribeFromTopic(user.uid);
+    await FirebaseAuth.instance.signOut();
+    isLoading = false;
+    notifyListeners();
+    Navigator.pushReplacement(context, SlideRight(screen: LoginScreen()));
   }
 
   Future addNewPost(PostModel model) async {

@@ -7,6 +7,7 @@ import 'package:social_media_app/models/chat_model.dart';
 import 'package:social_media_app/models/user_model.dart';
 import 'package:social_media_app/shared/get_current_time.dart';
 import 'package:social_media_app/shared/get_messenger_code.dart';
+import 'package:social_media_app/shared/push_notification.dart';
 import 'package:social_media_app/static_access/mangers.dart';
 
 class ChatManger extends ChangeNotifier {
@@ -69,18 +70,25 @@ class ChatManger extends ChangeNotifier {
 
   void sendMessage(TextEditingController controller) async {
     if (controller.text.isNotEmpty) {
+      String message = controller.text;
+      controller.clear();
       ChatModel model = ChatModel(
         date: '',
         from: myUid,
         to: receiver.uid,
-        massage: controller.text,
+        massage: message,
         sent: false,
       );
       chats.insert(0, model);
-      controller.clear();
       notifyListeners();
       String date = await getCurrentTime();
       model.date = date;
+      String myName = StaticManger.userModel!.name;
+      await pushNotification(
+        toToken: receiver.uid,
+        name: myName,
+        message: message,
+      );
       await FirebaseFirestore.instance
           .collection('messenger')
           .doc(messengerCode)
