@@ -65,7 +65,7 @@ class CommentManger extends ChangeNotifier {
           .collection('users')
           .doc(model.userId)
           .get();
-      model.user = UserModel.fromJson(user);
+      model.user = UserModel.fromSnapshot(user);
       comments.add(model);
     }
     isLoading = false;

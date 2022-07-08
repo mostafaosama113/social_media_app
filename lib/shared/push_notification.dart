@@ -1,26 +1,27 @@
 import 'package:dio/dio.dart';
+import 'package:social_media_app/models/user_model.dart';
+import 'package:social_media_app/shared/string_manger.dart';
 
 Future pushNotification({
-  required String toToken,
-  required String name,
+  required UserModel receiver,
+  required String senderName,
   required String message,
 }) async {
-  var serverKey =
-      'AAAAZ-ZpkBU:APA91bHfyJJyjlNnn5D9O8hQDjoN0UBPUJGyRjrxnDQ5GTssgeV24rQZ3FdOxEXO-fwrShfbwOYxAVQn6YCrHV-nznqQdvXUwf-_ElSWJIwksDjhd3IofFphi8DVjf4-lNhBNRQDjRrD';
   Dio dio = Dio();
   await dio.post(
     'https://fcm.googleapis.com/fcm/send',
     options: Options(
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': 'key=$serverKey',
+        'Authorization': 'key=${StringManger.serverKey}',
       },
     ),
     data: {
-      'to': '/topics/$toToken',
+      'to': '/topics/${receiver.uid}',
       "data": {
-        "title": name,
-        "body": message,
+        "name": senderName,
+        "message": message,
+        "model": receiver.toJson(),
       },
     },
   );

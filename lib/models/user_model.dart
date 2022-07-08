@@ -7,9 +7,16 @@ class UserModel {
   late String uid;
   String? bio;
 
-  UserModel.fromJson(DocumentSnapshot snapshot) {
+  UserModel.fromSnapshot(DocumentSnapshot snapshot) {
     Map<String, dynamic> json = snapshot.data() as Map<String, dynamic>;
     uid = snapshot.id;
+    name = json['name'];
+    image = json['image'];
+    cover = json['cover'];
+    bio = json['bio'];
+  }
+  UserModel.fromJson(Map<String, dynamic> json) {
+    uid = json['uid'];
     name = json['name'];
     image = json['image'];
     cover = json['cover'];
@@ -22,4 +29,13 @@ class UserModel {
     required this.uid,
     this.bio,
   });
+  Map<String, dynamic> toJson() {
+    return {
+      'uid': uid,
+      'name': name,
+      'image': image,
+      'cover': cover,
+      'bio': bio,
+    };
+  }
 }

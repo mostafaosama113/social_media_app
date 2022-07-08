@@ -17,7 +17,7 @@ class MessangerManger extends ChangeNotifier {
     List<QueryDocumentSnapshot> list = snapshot.docs;
     String myUid = FirebaseAuth.instance.currentUser!.uid;
     for (QueryDocumentSnapshot documentSnapshot in list) {
-      UserModel model = UserModel.fromJson(documentSnapshot);
+      UserModel model = UserModel.fromSnapshot(documentSnapshot);
       if (model.uid != myUid) users.add(model);
     }
     isLoading = false;

@@ -32,7 +32,7 @@ class _LikeListScreenState extends State<LikeListScreen> {
     for (String uid in widget.uIds) {
       DocumentSnapshot snapshot =
           await FirebaseFirestore.instance.collection('users').doc(uid).get();
-      users.add(UserModel.fromJson(snapshot));
+      users.add(UserModel.fromSnapshot(snapshot));
     }
     setState(() {
       isLoading = false;

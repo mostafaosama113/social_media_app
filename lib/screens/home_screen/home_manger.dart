@@ -38,7 +38,7 @@ class HomeManger extends ChangeNotifier {
             .collection('users')
             .doc(model.userId)
             .get();
-        model.userModel = UserModel.fromJson(snapshot);
+        model.userModel = UserModel.fromSnapshot(snapshot);
         QuerySnapshot likes = await FirebaseFirestore.instance
             .collection('posts')
             .doc(model.postId)

@@ -35,7 +35,7 @@ class _SplashScreenState extends State<SplashScreen> {
             .doc(user.uid)
             .get()
             .then((value) {
-          UserModel userModel = UserModel.fromJson(value);
+          UserModel userModel = UserModel.fromSnapshot(value);
           Navigator.pushReplacement(
               context, SlideRight(screen: HomeScreen(userModel)));
         });

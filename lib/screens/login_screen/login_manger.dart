@@ -34,7 +34,7 @@ class LoginManger extends ChangeNotifier {
           .doc(FirebaseAuth.instance.currentUser!.uid)
           .get()
           .then((value) {
-        UserModel userModel = UserModel.fromJson(value);
+        UserModel userModel = UserModel.fromSnapshot(value);
         FirebaseMessaging.instance.subscribeToTopic(userModel.uid);
         isLoading = false;
         notifyListeners();

@@ -85,8 +85,8 @@ class ChatManger extends ChangeNotifier {
       model.date = date;
       String myName = StaticManger.userModel!.name;
       await pushNotification(
-        toToken: receiver.uid,
-        name: myName,
+        receiver: receiver,
+        senderName: myName,
         message: message,
       );
       await FirebaseFirestore.instance

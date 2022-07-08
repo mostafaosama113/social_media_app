@@ -1,4 +1,3 @@
-import 'package:chat_bubbles/bubbles/bubble_normal_audio.dart';
 import 'package:chat_bubbles/bubbles/bubble_special_three.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -6,7 +5,6 @@ import 'package:provider/provider.dart';
 import 'package:social_media_app/models/user_model.dart';
 import 'package:social_media_app/screens/chat_screen/chat_manger.dart';
 import 'package:social_media_app/shared/colors.dart';
-import 'package:social_media_app/shared/manger/text_style_manger.dart';
 import 'package:social_media_app/static_access/mangers.dart';
 import 'package:social_media_app/widgets/post_setting.dart';
 import 'package:social_media_app/widgets/send_widget.dart';
