@@ -1,3 +1,4 @@
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:social_media_app/models/user_model.dart';
@@ -12,9 +13,21 @@ import 'package:social_media_app/widgets/new_post_widget.dart';
 import 'package:social_media_app/widgets/post_widget.dart';
 
 class HomeScreen extends StatelessWidget {
-  HomeScreen(this.userModel, {Key? key}) : super(key: key);
+  HomeScreen(this.userModel, {Key? key}) : super(key: key) {
+    FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
+    _firebaseMessaging.getToken().then((String? token) {
+      assert(token != null);
+    });
+    FirebaseMessaging.onMessage.listen(_firebaseMessagingForegroundHandler);
+  }
   final UserModel userModel;
   final refreshKey = GlobalKey<RefreshIndicatorState>();
+
+  Future<void> _firebaseMessagingForegroundHandler(
+      RemoteMessage message) async {
+    print("Handling a foreground message: ${message.data['name']}");
+  }
+
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(

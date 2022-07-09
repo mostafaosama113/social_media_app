@@ -55,6 +55,7 @@ dependencies:
   path:
   chat_bubbles: ^1.2.0
   firebase_messaging: ^11.4.4
+  awesome_notifications: ^0.6.21
 
 
 dev_dependencies:
