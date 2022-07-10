@@ -47,8 +47,7 @@ void main() async {
       .listen((ReceivedNotification receivedNotification) async {
     UserModel user = UserModel.fromJson(
         json.decode(receivedNotification.payload!['model']!));
-    if (StaticManger.context ==
-        null /*receivedNotification.payload!['isForeground'] == 'no'*/) {
+    if (StaticManger.context == null) {
       await Future.delayed(const Duration(seconds: 5));
     }
     Navigator.push(

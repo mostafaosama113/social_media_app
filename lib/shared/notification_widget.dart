@@ -14,6 +14,7 @@ void showNotification({
       StaticManger.chatManger!.receiver.uid != userModel.uid) {
     AwesomeNotifications().createNotification(
       content: NotificationContent(
+        groupKey: userModel.uid,
         id: 10,
         wakeUpScreen: true,
         channelKey: 'basic_channel',
