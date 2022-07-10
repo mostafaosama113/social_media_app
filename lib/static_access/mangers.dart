@@ -12,5 +12,5 @@ class StaticManger {
   static UserModel? userModel;
   static SettingManger? settingManger;
   static ChatManger? chatManger;
-  static BuildContext? context;
+  static ValueNotifier<BuildContext?> context = ValueNotifier(null);
 }

@@ -45,7 +45,7 @@ class HomeScreen extends StatelessWidget {
       },
       builder: (context, child) => Consumer<HomeManger>(
         builder: (context, model, child) {
-          StaticManger.context = context;
+          StaticManger.context.value ??= context;
           return Stack(
             children: [
               Scaffold(

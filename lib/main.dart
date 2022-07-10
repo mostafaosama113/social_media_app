@@ -47,15 +47,26 @@ void main() async {
       .listen((ReceivedNotification receivedNotification) async {
     UserModel user = UserModel.fromJson(
         json.decode(receivedNotification.payload!['model']!));
-    if (StaticManger.context == null) {
-      await Future.delayed(const Duration(seconds: 5));
+    if (StaticManger.context.value != null) {
+      Navigator.push(
+        StaticManger.context.value!,
+        SlideRight(
+          screen: ChatScreen(user),
+        ),
+      );
+    } else {
+      StaticManger.context.addListener(() async {
+        if (StaticManger.context.value != null) {
+          await Future.delayed(const Duration(seconds: 1));
+          Navigator.push(
+            StaticManger.context.value!,
+            SlideRight(
+              screen: ChatScreen(user),
+            ),
+          );
+        }
+      });
     }
-    Navigator.push(
-      StaticManger.context!,
-      SlideRight(
-        screen: ChatScreen(user),
-      ),
-    );
   });
   runApp(const MyApp());
 }
