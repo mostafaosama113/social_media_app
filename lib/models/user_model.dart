@@ -29,7 +29,7 @@ class UserModel {
     required this.uid,
     this.bio,
   });
-  Map<String, dynamic> toJson() {
+  Map toJson() {
     return {
       'uid': uid,
       'name': name,

@@ -1,6 +1,8 @@
+import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:social_media_app/models/user_model.dart';
 import 'package:social_media_app/shared/string_manger.dart';
+import 'package:social_media_app/static_access/mangers.dart';
 
 Future pushNotification({
   required UserModel receiver,
@@ -21,7 +23,7 @@ Future pushNotification({
       "data": {
         "name": senderName,
         "message": message,
-        "model": receiver.toJson(),
+        "model": json.encode(StaticManger.userModel!.toJson()),
       },
     },
   );

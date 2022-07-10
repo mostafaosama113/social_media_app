@@ -17,7 +17,6 @@ void initializeNotification() async {
     'resource://drawable/ic_launcher',
     [
       NotificationChannel(
-
           //channelGroupKey: 'basic_tests',
           channelKey: 'basic_channel',
           channelName: 'Basic notifications',
@@ -43,6 +42,11 @@ class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
+    AwesomeNotifications().isNotificationAllowed().then((isAllowed) {
+      if (!isAllowed) {
+        AwesomeNotifications().requestPermissionToSendNotifications();
+      }
+    });
     return ScreenUtilInit(
       builder: (context, child) => OKToast(
         child: MaterialApp(

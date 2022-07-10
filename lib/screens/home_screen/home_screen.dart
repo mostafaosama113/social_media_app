@@ -1,3 +1,4 @@
+import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -6,6 +7,7 @@ import 'package:social_media_app/screens/home_screen/home_drawer.dart';
 import 'package:social_media_app/screens/home_screen/home_manger.dart';
 import 'package:social_media_app/shared/colors.dart';
 import 'package:social_media_app/shared/manger/text_style_manger.dart';
+import 'package:social_media_app/shared/notification_widget.dart';
 import 'package:social_media_app/shared/string_manger.dart';
 import 'package:social_media_app/static_access/mangers.dart';
 import 'package:social_media_app/widgets/loading_widget.dart';
@@ -26,6 +28,10 @@ class HomeScreen extends StatelessWidget {
   Future<void> _firebaseMessagingForegroundHandler(
       RemoteMessage message) async {
     print("Handling a foreground message: ${message.data['name']}");
+    showNotification(
+      message: message,
+      isForeground: true,
+    );
   }
 
   @override
