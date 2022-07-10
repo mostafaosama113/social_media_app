@@ -1,3 +1,5 @@
+import 'package:flutter/cupertino.dart';
+
 import '../models/user_model.dart';
 import '../screens/chat_screen/chat_manger.dart';
 import '../screens/home_screen/home_manger.dart';
@@ -10,4 +12,5 @@ class StaticManger {
   static UserModel? userModel;
   static SettingManger? settingManger;
   static ChatManger? chatManger;
+  static BuildContext? context;
 }

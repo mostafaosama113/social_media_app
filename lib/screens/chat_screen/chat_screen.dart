@@ -24,6 +24,7 @@ class _ChatScreenState extends State<ChatScreen> {
   void dispose() {
     super.dispose();
     StaticManger.chatManger!.closeAllStream();
+    StaticManger.chatManger = null;
   }
 
   @override
