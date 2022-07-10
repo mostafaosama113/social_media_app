@@ -14,7 +14,7 @@ import 'package:social_media_app/widgets/loading_widget.dart';
 import 'package:social_media_app/widgets/new_post_widget.dart';
 import 'package:social_media_app/widgets/post_widget.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   HomeScreen(this.userModel, {Key? key}) : super(key: key) {
     FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
     _firebaseMessaging.getToken().then((String? token) {
@@ -22,9 +22,6 @@ class HomeScreen extends StatelessWidget {
     });
     FirebaseMessaging.onMessage.listen(_firebaseMessagingForegroundHandler);
   }
-  final UserModel userModel;
-  final refreshKey = GlobalKey<RefreshIndicatorState>();
-
   Future<void> _firebaseMessagingForegroundHandler(
       RemoteMessage message) async {
     print("Handling a foreground message: ${message.data['name']}");
@@ -34,13 +31,28 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
+  final UserModel userModel;
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  final refreshKey = GlobalKey<RefreshIndicatorState>();
+
+  @override
+  void dispose() {
+    super.dispose();
+    StaticManger.context.value = null;
+  }
+
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
       create: (context) {
-        HomeManger manger = HomeManger(userModel)..getPosts();
+        HomeManger manger = HomeManger(widget.userModel)..getPosts();
         StaticManger.homeManger = manger;
-        StaticManger.userModel = userModel;
+        StaticManger.userModel = widget.userModel;
         return manger;
       },
       builder: (context, child) => Consumer<HomeManger>(
@@ -65,7 +77,7 @@ class HomeScreen extends StatelessWidget {
                     itemBuilder: (context, index) {
                       if (index == 0) {
                         return newPostWidget(
-                            model: userModel, context: context);
+                            model: widget.userModel, context: context);
                       } else {
                         return PostWidget(
                           homeManger: model,
@@ -77,7 +89,9 @@ class HomeScreen extends StatelessWidget {
                   ),
                 ),
                 drawer: homeDrawer(
-                    context: context, userModel: userModel, model: model),
+                    context: context,
+                    userModel: widget.userModel,
+                    model: model),
               ),
               if (model.isLoading) loadingWidget(),
             ],

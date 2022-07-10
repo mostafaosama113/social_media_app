@@ -65,7 +65,13 @@ class HomeManger extends ChangeNotifier {
     await FirebaseAuth.instance.signOut();
     isLoading = false;
     notifyListeners();
-    Navigator.pushReplacement(context, SlideRight(screen: LoginScreen()));
+
+    Navigator.pushReplacement(
+      context,
+      SlideRight(
+        screen: LoginScreen(),
+      ),
+    );
   }
 
   Future addNewPost(PostModel model) async {

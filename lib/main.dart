@@ -45,6 +45,7 @@ void main() async {
   AwesomeNotifications()
       .actionStream
       .listen((ReceivedNotification receivedNotification) async {
+    print('check ${StaticManger.context.value}');
     UserModel user = UserModel.fromJson(
         json.decode(receivedNotification.payload!['model']!));
     if (StaticManger.context.value != null) {
