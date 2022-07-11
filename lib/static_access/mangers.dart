@@ -11,6 +11,6 @@ class StaticManger {
   static ProfileManger? profileManger;
   static UserModel? userModel;
   static SettingManger? settingManger;
-  static ChatManger? chatManger;
+  static Map<String, ChatManger?> chatManger = {};
   static ValueNotifier<BuildContext?> context = ValueNotifier(null);
 }

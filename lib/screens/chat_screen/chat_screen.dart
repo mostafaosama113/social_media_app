@@ -30,8 +30,8 @@ class _ChatScreenState extends State<ChatScreen> {
   @override
   void dispose() {
     super.dispose();
-    StaticManger.chatManger!.closeAllStream();
-    StaticManger.chatManger = null;
+    StaticManger.chatManger[widget.userModel.uid]!.closeAllStream();
+    StaticManger.chatManger[widget.userModel.uid] = null;
   }
 
   @override
@@ -39,8 +39,9 @@ class _ChatScreenState extends State<ChatScreen> {
     String myUid = FirebaseAuth.instance.currentUser!.uid;
     return ChangeNotifierProvider(
       create: (context) {
-        StaticManger.chatManger = ChatManger(widget.userModel);
-        return StaticManger.chatManger;
+        StaticManger.chatManger[widget.userModel.uid] =
+            ChatManger(widget.userModel);
+        return StaticManger.chatManger[widget.userModel.uid];
       },
       builder: (context, child) => Consumer<ChatManger>(
         builder: (context, model, child) {

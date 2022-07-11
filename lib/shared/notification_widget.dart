@@ -6,11 +6,10 @@ import 'package:social_media_app/static_access/mangers.dart';
 
 void showNotification({
   required RemoteMessage message,
-  required bool isForeground,
 }) {
   UserModel userModel = UserModel.fromJson(json.decode(message.data['model']));
-  if (StaticManger.chatManger == null ||
-      StaticManger.chatManger!.receiver.uid != userModel.uid) {
+  if (StaticManger.chatManger[userModel.uid] == null ||
+      StaticManger.chatManger[userModel.uid]!.receiver.uid != userModel.uid) {
     AwesomeNotifications().createNotification(
       content: NotificationContent(
         groupKey: userModel.uid,
@@ -21,7 +20,6 @@ void showNotification({
         body: message.data['message'],
         payload: {
           'model': message.data['model'],
-          'isForeground': isForeground ? 'yes' : 'no',
         },
       ),
     );

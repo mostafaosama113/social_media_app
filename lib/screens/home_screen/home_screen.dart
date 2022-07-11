@@ -24,10 +24,8 @@ class HomeScreen extends StatefulWidget {
   }
   Future<void> _firebaseMessagingForegroundHandler(
       RemoteMessage message) async {
-    print("Handling a foreground message: ${message.data['name']}");
     showNotification(
       message: message,
-      isForeground: true,
     );
   }
 

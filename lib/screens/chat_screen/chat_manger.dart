@@ -26,7 +26,7 @@ class ChatManger extends ChangeNotifier {
   void closeAllStream() async {
     await subscription.cancel();
     await isTypingSubscription.cancel();
-    StaticManger.chatManger = null;
+    StaticManger.chatManger[receiver.uid] = null;
   }
 
   void isTypingStream() {

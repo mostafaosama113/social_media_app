@@ -16,8 +16,9 @@ import 'package:social_media_app/themes/light_theme.dart';
 
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   await Firebase.initializeApp();
-  print("Handling a background message: ${message.messageId}");
-  showNotification(message: message, isForeground: false);
+  showNotification(
+    message: message,
+  );
 }
 
 void initializeNotification() async {
@@ -45,16 +46,17 @@ void main() async {
   AwesomeNotifications()
       .actionStream
       .listen((ReceivedNotification receivedNotification) async {
-    print('check ${StaticManger.context.value}');
     UserModel user = UserModel.fromJson(
         json.decode(receivedNotification.payload!['model']!));
     if (StaticManger.context.value != null) {
-      Navigator.push(
-        StaticManger.context.value!,
-        SlideRight(
-          screen: ChatScreen(user),
-        ),
-      );
+      if (StaticManger.chatManger[user.uid] == null) {
+        Navigator.push(
+          StaticManger.context.value!,
+          SlideRight(
+            screen: ChatScreen(user),
+          ),
+        );
+      }
     } else {
       StaticManger.context.addListener(() async {
         if (StaticManger.context.value != null) {
