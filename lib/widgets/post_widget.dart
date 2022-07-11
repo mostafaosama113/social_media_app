@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -64,6 +66,28 @@ class _PostWidgetState extends State<PostWidget> {
   @override
   void initState() {
     super.initState();
+    watchComments();
+  }
+
+  late StreamSubscription commentStream;
+  int commentCounter = 0;
+  void watchComments() {
+    commentStream = FirebaseFirestore.instance
+        .collection('posts')
+        .doc(widget.postModel.postId)
+        .collection('comments')
+        .snapshots()
+        .listen((event) {
+      setState(() {
+        commentCounter = event.docs.length;
+      });
+    });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    commentStream.cancel();
   }
 
   void like() {
@@ -276,26 +300,52 @@ class _PostWidgetState extends State<PostWidget> {
                     ),
                   ),
                 ),
-              if (widget.postModel.likes.isNotEmpty)
-                InkWell(
-                  onTap: () => Navigator.push(
-                    context,
-                    SlideRight(
-                      screen: LikeListScreen(widget.postModel.likes),
-                    ),
-                  ),
-                  child: Padding(
-                    padding:
-                        const EdgeInsets.only(left: 15, right: 15, bottom: 5),
-                    child: Align(
-                      alignment: AlignmentDirectional.centerEnd,
-                      child: Text(
-                        '${widget.postModel.likes.length} like',
-                        style: defaultHintStyle,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  if (widget.postModel.likes.isNotEmpty)
+                    InkWell(
+                      onTap: () => Navigator.push(
+                        context,
+                        SlideRight(
+                          screen: LikeListScreen(widget.postModel.likes),
+                        ),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.only(
+                            left: 15, right: 15, bottom: 5),
+                        child: Align(
+                          alignment: AlignmentDirectional.centerEnd,
+                          child: Text(
+                            '${widget.postModel.likes.length} like',
+                            style: defaultHintStyle,
+                          ),
+                        ),
                       ),
                     ),
-                  ),
-                ),
+                  if (commentCounter != 0)
+                    InkWell(
+                      onTap: () => Navigator.push(
+                        context,
+                        SlideRight(
+                          screen: CommentScreen(
+                            postModel: widget.postModel,
+                          ),
+                        ),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.only(right: 15, bottom: 5),
+                        child: Align(
+                          alignment: AlignmentDirectional.centerEnd,
+                          child: Text(
+                            '$commentCounter comments',
+                            style: defaultHintStyle,
+                          ),
+                        ),
+                      ),
+                    ),
+                ],
+              ),
               Container(
                 color: Colors.grey,
                 height: 1,
