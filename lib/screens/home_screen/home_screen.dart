@@ -78,6 +78,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             model: widget.userModel, context: context);
                       } else {
                         return PostWidget(
+                          key: Key(model.posts[index - 1].postId),
                           homeManger: model,
                           postModel: model.posts[index - 1],
                         );

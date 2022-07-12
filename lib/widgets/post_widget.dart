@@ -49,7 +49,7 @@ Widget btn({
 
 class PostWidget extends StatefulWidget {
   const PostWidget(
-      {Key? key,
+      {required Key key,
       required this.postModel,
       this.isActive = true,
       required this.homeManger})

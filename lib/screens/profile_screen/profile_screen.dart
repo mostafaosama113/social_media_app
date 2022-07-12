@@ -310,6 +310,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               return getHeader(context);
                             } else {
                               return PostWidget(
+                                key: Key(widget.postModel[index - 1].postId),
                                 homeManger: homeManger,
                                 postModel: widget.postModel[index - 1],
                                 isActive: false,
