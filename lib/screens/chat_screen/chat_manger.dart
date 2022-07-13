@@ -41,7 +41,7 @@ class ChatManger extends ChangeNotifier {
         if (!forFirstTime) {
           isTyping = true;
           notifyListeners();
-          await Future.delayed(const Duration(seconds: 1));
+          await Future.delayed(const Duration(seconds: 3));
           isTyping = false;
           notifyListeners();
         }
