@@ -48,7 +48,6 @@ class HomeManger extends ChangeNotifier {
         for (QueryDocumentSnapshot id in likes.docs) {
           likesUid.add(id.id);
         }
-        model.likes = likesUid;
         posts.add(model);
         if (postById[model.userId] == null) postById[model.userId] = [];
         postById[model.userId]!.add(model);

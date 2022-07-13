@@ -9,8 +9,6 @@ class PostModel {
   UserModel? userModel;
   String? image;
   late String postId;
-  List<String> likes = [];
-  List<CommentModel> comment = [];
 
   PostModel.fromJson(QueryDocumentSnapshot data) {
     postId = data.id;

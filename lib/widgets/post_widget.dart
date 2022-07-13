@@ -67,8 +67,10 @@ class _PostWidgetState extends State<PostWidget> {
   void initState() {
     super.initState();
     watchComments();
+    watchLikes();
   }
 
+  final String myUid = FirebaseAuth.instance.currentUser!.uid;
   late StreamSubscription commentStream;
   int commentCounter = 0;
   void watchComments() {
@@ -84,62 +86,66 @@ class _PostWidgetState extends State<PostWidget> {
     });
   }
 
+  late StreamSubscription likeStream;
+  int likeCounter = 0;
+  bool isLiked = false;
+  List<String> likeList = [];
+  void watchLikes() {
+    likeStream = FirebaseFirestore.instance
+        .collection('posts')
+        .doc(widget.postModel.postId)
+        .collection('likes')
+        .snapshots()
+        .listen((event) {
+      setState(() {
+        likeCounter = event.docs.length;
+        isLiked = false;
+        likeList = [];
+        for (QueryDocumentSnapshot snapshot in event.docs) {
+          likeList.add(snapshot.id);
+          if (snapshot.id == myUid) {
+            isLiked = true;
+          }
+        }
+      });
+    });
+  }
+
   @override
   void dispose() {
     super.dispose();
     commentStream.cancel();
+    likeStream.cancel();
   }
 
   void like() {
-    bool isLiked = widget.postModel.likes.contains(widget.homeManger.user.uid);
-    String uid = widget.homeManger.user.uid;
     if (isLiked) {
       setState(() {
-        widget.postModel.likes.remove(uid);
+        isLiked = false;
+        likeCounter--;
       });
       FirebaseFirestore.instance
           .collection('posts')
           .doc(widget.postModel.postId)
           .collection('likes')
-          .doc(uid)
-          .delete()
-          .catchError((error) {
-        toast('Error');
-        setState(() {
-          widget.postModel.likes.add(uid);
-        });
-      });
+          .doc(myUid)
+          .delete();
     } else {
-      setState(() {
-        widget.postModel.likes.add(uid);
-      });
+      isLiked = true;
+      likeCounter++;
       FirebaseFirestore.instance
           .collection('posts')
           .doc(widget.postModel.postId)
           .collection('likes')
-          .doc(uid)
+          .doc(myUid)
           .set({}).catchError((error) {
         toast('Error');
-        setState(() {
-          widget.postModel.likes.remove(uid);
-        });
       });
-    }
-    if (!widget.isActive) {
-      List<PostModel> posts = StaticManger.homeManger!.posts;
-      for (PostModel post in posts) {
-        if (post.postId == widget.postModel.postId) {
-          post = widget.postModel;
-        }
-      }
-      StaticManger.homeManger!.notifyListeners();
     }
   }
 
-  final String myUid = FirebaseAuth.instance.currentUser!.uid;
   @override
   Widget build(BuildContext context) {
-    bool isLiked = widget.postModel.likes.contains(widget.homeManger.user.uid);
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 9),
       child: Material(
@@ -303,21 +309,23 @@ class _PostWidgetState extends State<PostWidget> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  if (widget.postModel.likes.isNotEmpty)
+                  if (likeCounter != 0)
                     InkWell(
-                      onTap: () => Navigator.push(
-                        context,
-                        SlideRight(
-                          screen: LikeListScreen(widget.postModel.likes),
-                        ),
-                      ),
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          SlideRight(
+                            screen: LikeListScreen(likeList),
+                          ),
+                        );
+                      },
                       child: Padding(
                         padding: const EdgeInsets.only(
                             left: 15, right: 15, bottom: 5),
                         child: Align(
                           alignment: AlignmentDirectional.centerEnd,
                           child: Text(
-                            '${widget.postModel.likes.length} like',
+                            '$likeCounter like',
                             style: defaultHintStyle,
                           ),
                         ),
